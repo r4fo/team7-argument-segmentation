@@ -1,0 +1,145 @@
+{
+  "labels": [
+    "O",
+    "B-Lead",
+    "I-Lead",
+    "B-Position",
+    "I-Position",
+    "B-Claim",
+    "I-Claim",
+    "B-Counterclaim",
+    "I-Counterclaim",
+    "B-Rebuttal",
+    "I-Rebuttal",
+    "B-Evidence",
+    "I-Evidence",
+    "B-Concluding Statement",
+    "I-Concluding Statement"
+  ],
+  "held_out_prompts": [
+    "Summer projects",
+    "Community service",
+    "Exploring Venus"
+  ],
+  "seed": 42,
+  "essays_per_split": {
+    "test_seen": 7819,
+    "test_unseen": 5154,
+    "val": 1302,
+    "train": 11721
+  },
+  "tokens_per_essay": {
+    "median": 412,
+    "p90": 739,
+    "max": 1808,
+    "share_over_512_word_tokens": 0.3197
+  },
+  "spans_per_split": {
+    "train": {
+      "Position": 11599,
+      "Evidence": 34500,
+      "Claim": 37691,
+      "Counterclaim": 4432,
+      "Rebuttal": 3245,
+      "Concluding Statement": 10132,
+      "Lead": 7016
+    },
+    "val": {
+      "Position": 1287,
+      "Claim": 4217,
+      "Evidence": 3837,
+      "Concluding Statement": 1123,
+      "Lead": 806,
+      "Counterclaim": 446,
+      "Rebuttal": 327
+    },
+    "test_seen": {
+      "Lead": 4331,
+      "Position": 7704,
+      "Claim": 24089,
+      "Evidence": 22475,
+      "Concluding Statement": 6545,
+      "Counterclaim": 2718,
+      "Rebuttal": 2049
+    },
+    "test_unseen": {
+      "Lead": 2937,
+      "Position": 5071,
+      "Evidence": 14755,
+      "Claim": 16561,
+      "Concluding Statement": 4477,
+      "Counterclaim": 1936,
+      "Rebuttal": 1594
+    }
+  },
+  "token_labels_per_split": {
+    "train": {
+      "B-Position": 11599,
+      "I-Position": 214890,
+      "B-Evidence": 34500,
+      "I-Evidence": 2912397,
+      "B-Claim": 37691,
+      "I-Claim": 670378,
+      "B-Counterclaim": 4432,
+      "I-Counterclaim": 110698,
+      "B-Rebuttal": 3245,
+      "I-Rebuttal": 92364,
+      "B-Concluding Statement": 10132,
+      "I-Concluding Statement": 662522,
+      "B-Lead": 7016,
+      "I-Lead": 394165,
+      "O": 274532
+    },
+    "val": {
+      "B-Position": 1287,
+      "I-Position": 23981,
+      "B-Claim": 4217,
+      "I-Claim": 72429,
+      "O": 31728,
+      "B-Evidence": 3837,
+      "I-Evidence": 318153,
+      "B-Concluding Statement": 1123,
+      "I-Concluding Statement": 73640,
+      "B-Lead": 806,
+      "I-Lead": 44078,
+      "B-Counterclaim": 446,
+      "I-Counterclaim": 10784,
+      "B-Rebuttal": 327,
+      "I-Rebuttal": 8549
+    },
+    "test_seen": {
+      "B-Lead": 4331,
+      "I-Lead": 231829,
+      "O": 169109,
+      "B-Position": 7704,
+      "I-Position": 139664,
+      "B-Claim": 24089,
+      "I-Claim": 431547,
+      "B-Evidence": 22475,
+      "I-Evidence": 1778156,
+      "B-Concluding Statement": 6545,
+      "I-Concluding Statement": 398058,
+      "B-Counterclaim": 2718,
+      "I-Counterclaim": 64031,
+      "B-Rebuttal": 2049,
+      "I-Rebuttal": 57742
+    },
+    "test_unseen": {
+      "O": 137333,
+      "B-Lead": 2937,
+      "I-Lead": 173429,
+      "B-Position": 5071,
+      "I-Position": 95258,
+      "B-Evidence": 14755,
+      "I-Evidence": 1230067,
+      "B-Claim": 16561,
+      "I-Claim": 298099,
+      "B-Concluding Statement": 4477,
+      "I-Concluding Statement": 305590,
+      "B-Counterclaim": 1936,
+      "I-Counterclaim": 51729,
+      "B-Rebuttal": 1594,
+      "I-Rebuttal": 58408
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "dropped_empty_text": 1435,
+  "dropped_not_found": 86,
+  "dropped_overlap": 19,
+  "essays_written": 25996,
+  "illegal_bio_transitions": 0,
+  "offset_already_correct": 80996,
+  "realigned_exact_search": 202866,
+  "segments_total": 285383,
+  "tokens_straddling_boundary": 35
+}

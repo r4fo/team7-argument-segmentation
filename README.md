@@ -1,67 +1,129 @@
-# Team 7 — Argumentative Discourse Element Segmentation
+# Argumentative Discourse Element Segmentation
 
-**COE025 Natural Language Processing — Project 2.** Status: **repository scaffold**, not a working training implementation. Replace the explicitly marked Python placeholders with your team's actual code and test the full pipeline.
+Team 7 · COE025 Natural Language Processing · Project 2 (token classification)
 
-## Objective
+We label every token of a student essay with its argumentative role and
+recover the argument spans: **Lead, Position, Claim, Counterclaim, Rebuttal,
+Evidence, Concluding Statement**. With BIO tagging that is 15 labels (B- and
+I- for each type, plus O). Effectiveness tagging is a possible extension and
+is not implemented.
 
-Identify discourse spans in English student essays and label them as **Lead, Position, Claim, Counterclaim, Rebuttal, Evidence, or Concluding Statement**. For token classification, seven categories become 15 BIO tags (B/I for each category plus O). **Effectiveness tagging** is a proposed extension, not yet implemented.
+**Research question:** do models learn argument structure, or only the
+vocabulary of the prompts they were trained on? We test on three prompts that
+no model sees during training.
 
 ## Data
 
-[PERSUADE 2.0 (official source)](https://github.com/scrosseye/persuade_corpus_2.0) — student essays and expert discourse annotations. Citation: Crossley et al. (2024), *A large-scale corpus for assessing written argumentation: PERSUADE 2.0*, Assessing Writing 61. Official source README currently specifies **CC BY 4.0**. Our original code uses [MIT](LICENSE), separately from the original data. See [DATA_LICENSE.md](DATA_LICENSE.md).
+[PERSUADE 2.0](https://github.com/scrosseye/persuade_corpus_2.0): 25,996
+argumentative essays by US students in grades 6–12, written for 15 prompts.
+Each essay was annotated by two expert raters independently and adjudicated
+by a third. License CC BY 4.0; see [DATA_LICENSE.md](DATA_LICENSE.md) for
+attribution, the changes we made, privacy notes and archive checksums.
 
-**Keep ZIP archives, raw student essays, private demographic attributes, processed text, and model checkpoints out of Git.** Download the authorized official files into `data/raw/` locally (ignored by Git). Do not publish data derived from minors without considering privacy. Never commit credentials or student IDs.
+**The released offsets are wrong for 68.62% of segments.** The start offset
+drifts and the error accumulates along each essay: the first segment is
+placed correctly 99.92% of the time, the tenth and later only 6.46%. Used as
+released, 62.14% of argument spans would get wrong token boundaries. We
+re-align every segment by searching for its text, which reproduces the
+annotation text exactly for 100% of kept segments, and we keep 99.46% of
+segments (the rest are empty, missing from the essay, or overlapping). Every
+figure comes from `src/verify_alignment.py`; full details in
+[docs/data_pipeline.md](docs/data_pipeline.md).
 
-## Directory guide
+What is measured and what is not:
 
-| Path | Purpose | Current status |
-|---|---|---|
-| `src/prepare_data.py` | Offset audit, realignment, BIO conversion, essay/prompt splits, reports | **PLACEHOLDER — replace with Team 7's actual script** |
-| `src/verify_alignment.py` | Independent validation of recovered spans | **PLACEHOLDER — replace with Team 7's actual script** |
-| `src/evaluate.py` | Exact-span and macro/micro F1, per-class evaluation | TODO placeholder |
-| `src/baselines/most_frequent.py` | Simple reference baseline | TODO placeholder |
-| `src/baselines/crf_features.py` | Feature-based CRF baseline | TODO placeholder |
-| `src/baselines/bilstm_crf.py` | BiLSTM-CRF candidate | TODO placeholder |
-| `src/trainers/train_token_clf.py` | Transformer token classifier and decoder options | TODO placeholder |
-| `data/raw/`, `data/processed/` | Raw archives and generated data, kept out of Git | Empty tracked folders |
-| `docs/data_pipeline.md` | Cleaning details, statistics, provenance and split rules | Protocol template |
-| `docs/verification_sample.md` | Independent manual QA protocol and 30-case template | Not yet verified |
-| `docs/metrics_protocol.md` | Evaluation metrics and comparison rules | Proposed protocol |
-| `notebooks/colab_train.ipynb` | GPU launcher to call scripts; no duplicated model implementation | Starter notebook |
-| `results/benchmark.md` | Measured results once available | Empty benchmark template |
-| `contributions/` | Five work logs linked to pull requests | Member templates |
+| Claim | Status |
+| --- | --- |
+| 68.62% of released offsets do not reproduce the segment text | Measured (`verify_alignment.py`, check A) |
+| 99.46% of segments kept after repair | Measured; a retention rate, not an accuracy |
+| Repaired offsets reproduce the annotation text: 100% | Measured (check C) |
+| Repaired span is the intended occurrence when a phrase repeats | Manual audit of a stratified sample: `docs/verification_sample.md` |
+| Repair improves model scores | Not yet measured: offset-repair ablation in `docs/metrics_protocol.md` |
 
-## Installation (planned)
+| Split | Rule | Essays |
+| --- | --- | --- |
+| train | Official train essays from 12 prompts, minus validation | 11,721 |
+| val | 10% of those essays (seed 42) | 1,302 |
+| test_seen | Official test essays from the same 12 prompts | 7,819 |
+| test_unseen | All essays of the held-out prompts Summer projects, Community service, Exploring Venus | 5,154 |
 
-Use Python 3.11:
+## Repository layout
+
+| Path | Purpose | Status |
+| --- | --- | --- |
+| `data/raw/` | Official PERSUADE 2.0 train and test archives, unchanged | Done |
+| `data/processed/` | Cleaned BIO data per split (`*.jsonl.gz`), `splits.json`, `stats.json`, `cleaning_report.json`, `verification_report.json` | Done |
+| `src/prepare_data.py` | Raw archives → re-aligned segments → tokens + BIO labels → splits | Done |
+| `src/verify_alignment.py` | Independent checks of the repair; writes the audit sample | Done |
+| `src/evaluate.py` | Overlap and exact span F1 (macro, micro, per class) and analyses | To do |
+| `src/baselines/most_frequent.py` | Most-frequent tag per word | To do |
+| `src/baselines/crf_features.py` | Linear-chain CRF with hand-built features | To do |
+| `src/baselines/bilstm_crf.py` | BiLSTM-CRF | To do |
+| `src/trainers/train_token_clf.py` | Transformer token classifier, softmax or CRF decoder, sliding windows | To do |
+| `notebooks/colab_train.ipynb` | Runs the scripts on a Colab GPU; contains no model code | Started |
+| `docs/data_pipeline.md` | Every cleaning step, why it is needed, and its counts | Done |
+| `docs/verification_sample.md` | Stratified manual audit of 30 repaired segments, two reviewers | To review |
+| `docs/metrics_protocol.md` | Metrics, why we use them, and the planned analyses | Done |
+| `results/benchmark.md` | Measured scores per model | Empty until runs exist |
+| `contributions/` | One file per member, named `<NAME>_<STUDENT_ID>_<GITHUB_USERNAME>.md` | To do |
+
+## Reproduce the data
+
 ```bash
-python -m venv .venv
-# Linux/macOS: source .venv/bin/activate
-# Windows PowerShell: .venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
+pip install -r requirements.txt
+
+# Clean (about 2 minutes, CPU only)
+python src/prepare_data.py \
+    --train-zip data/raw/persuade_corpus_2.0_train.zip \
+    --test-zip  data/raw/persuade_corpus_2.0_test.zip \
+    --out-dir   data/processed
+
+# Verify (about 1 minute)
+python src/verify_alignment.py \
+    --train-zip data/raw/persuade_corpus_2.0_train.zip \
+    --test-zip  data/raw/persuade_corpus_2.0_test.zip \
+    --report    data/processed/verification_report.json \
+    --sample    docs/verification_sample.md
 ```
-Dependencies are **starter exact pins, not yet integration-tested** with your scripts or the Colab GPU image. Install CUDA-specific PyTorch following https://pytorch.org/get-started/locally/ if required.
 
-## Reproduction workflow (NOT YET RUNNABLE)
+Both commands regenerate the committed files byte for byte (seed 42).
 
-1. Get the official archives through the links in the upstream README, record hashes and source version, store in ignored `data/raw/`.
-2. Replace both preprocessing and alignment-validation placeholders with Team 7's actual verified scripts. Update the CLI examples below to reflect their real interfaces.
-3. **Proposed commands only** (not yet verified):
-```bash
-python src/prepare_data.py --raw-dir data/raw --output-dir data/processed --seed 42
-python src/verify_alignment.py --data-dir data/processed --output data/processed/verification_report.json
+Each line of a processed file is one essay:
+
+```json
+{"essay_id": "...", "prompt": "Phones and driving", "task": "Independent",
+ "official_set": "train", "tokens": ["..."], "offsets": [[0, 6]],
+ "labels": ["B-Lead", "I-Lead", "O"], "text": "..."}
 ```
-4. Run models with identical, disjoint essay-level train/validation/test sets, and compare seen-prompt versus held-out-prompt performance.
-5. Evaluate on the **same independently vetted reference annotations**. Record model name/version, config, seed, runtime, code commit, dataset hashes, and scores in `results/`.
 
-## Measured vs. unverified data-quality claims
+## Benchmark
 
-- **69% official offset mismatch rate** — **measured by Team 7** under its own consistency test; document exact numerator, denominator, text normalization, and endpoint convention in `docs/data_pipeline.md`.
-- **99.46% retention** — **measured by Team 7**: fraction of segments kept after realignment and discarding irrecoverable cases. **This is not a correctness/accuracy rate.**
-- **Alignment correctness of retained segments** — NOT YET established independently. Follow `docs/verification_sample.md` before claiming accuracy.
-- **Cleaning-related model improvement** — NOT YET measured. Require a controlled ablation before claiming it.
+Baselines are the vanilla methods from the course; the last row is our model.
+Scores will appear in [results/benchmark.md](results/benchmark.md) as runs
+finish.
 
-## Collaboration
+| # | Architecture | Specific model | Decoder |
+| --- | --- | --- | --- |
+| 1 | Lookup | Most-frequent tag per word | Argmax |
+| 2 | Linear-chain CRF | sklearn-crfsuite, hand features | Viterbi |
+| 3 | BiLSTM | BiLSTM + GloVe | CRF |
+| 4 | BERT | bert-base-cased | Softmax |
+| 5 | BERT | bert-base-cased | CRF |
+| 6 | DeBERTa | deberta-v3-base | CRF |
 
-Use one issue and feature branch per change; open a pull request for review and fill your personal contributions log. See [CONTRIBUTING.md](CONTRIBUTING.md).
+**Primary metric:** span-level macro F1, where a prediction matches a gold
+span of the same type when each covers at least 50% of the other. Macro
+averaging gives rare roles (Rebuttal, Counterclaim) the same weight as
+frequent ones; token accuracy would stay high while those fail. We also
+report exact-match span F1 and per-class F1
+([docs/metrics_protocol.md](docs/metrics_protocol.md)).
 
+## Team
+
+Each member documents their work in `contributions/` and commits it from
+their own GitHub account.
+
+## License
+
+Code: [MIT](LICENSE). Data: CC BY 4.0, PERSUADE 2.0 (Crossley et al., 2024);
+see [DATA_LICENSE.md](DATA_LICENSE.md).
