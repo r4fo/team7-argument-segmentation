@@ -1,0 +1,15 @@
+# Starter pins for Python 3.11: not yet tested with Team 7's real scripts/Colab GPU.
+numpy==1.26.4
+pandas==2.2.3
+scipy==1.15.2
+scikit-learn==1.6.1
+seqeval==1.2.2
+sklearn-crfsuite==0.5.0
+transformers==4.51.3
+datasets==3.5.1
+accelerate==1.6.0
+evaluate==0.4.3
+torch==2.6.0
+tqdm==4.67.1
+pytest==8.3.5
+
