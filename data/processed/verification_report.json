@@ -25,6 +25,12 @@
   "E_essays_span_count_mismatch": 0,
   "F_tokens_with_different_label_pct": 2.57,
   "F_spans_with_different_token_boundaries_pct": 62.14,
+  "H_repeated_phrase_segments": 17640,
+  "H_chose_copy_nearest_official_start_pct": 99.68,
+  "H_argument_segments_repeated": 4466,
+  "H_argument_segments_nearest_copy_pct": 100.0,
+  "H_unannotated_segments_repeated": 13174,
+  "H_unannotated_segments_nearest_copy_pct": 99.57,
   "F_changed_pct_by_true_label": {
     "Claim": 5.24,
     "Concluding Statement": 2.75,
@@ -54,6 +60,12 @@
     "F_spans": 237900,
     "F_spans_boundary_changed": 147831,
     "F_tokens": 11773237,
-    "F_tokens_changed": 303004
+    "F_tokens_changed": 303004,
+    "H_repeated_unannotated": 13174,
+    "H_nearest_unannotated": 13117,
+    "H_repeated_segments": 17640,
+    "H_chose_nearest_copy": 17583,
+    "H_repeated_arg": 4466,
+    "H_nearest_arg": 4466
   }
 }

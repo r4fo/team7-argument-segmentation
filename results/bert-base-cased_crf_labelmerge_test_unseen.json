@@ -1,0 +1,125 @@
+{
+  "overlap_span": {
+    "macro_f1": 0.5775,
+    "micro_f1": 0.5601,
+    "per_class": {
+      "Lead": {
+        "precision": 0.7363,
+        "recall": 0.7995,
+        "f1": 0.7666,
+        "support": 2937
+      },
+      "Position": {
+        "precision": 0.6729,
+        "recall": 0.5644,
+        "f1": 0.6139,
+        "support": 5071
+      },
+      "Claim": {
+        "precision": 0.637,
+        "recall": 0.4303,
+        "f1": 0.5136,
+        "support": 16561
+      },
+      "Counterclaim": {
+        "precision": 0.5587,
+        "recall": 0.4225,
+        "f1": 0.4812,
+        "support": 1936
+      },
+      "Rebuttal": {
+        "precision": 0.4467,
+        "recall": 0.3363,
+        "f1": 0.3837,
+        "support": 1594
+      },
+      "Evidence": {
+        "precision": 0.5906,
+        "recall": 0.4079,
+        "f1": 0.4826,
+        "support": 14755
+      },
+      "Concluding Statement": {
+        "precision": 0.7772,
+        "recall": 0.8253,
+        "f1": 0.8006,
+        "support": 4477
+      }
+    }
+  },
+  "exact_span": {
+    "macro_f1": 0.3306,
+    "micro_f1": 0.3019,
+    "per_class": {
+      "Lead": {
+        "precision": 0.4346,
+        "recall": 0.4719,
+        "f1": 0.4525,
+        "support": 2937
+      },
+      "Position": {
+        "precision": 0.4435,
+        "recall": 0.3719,
+        "f1": 0.4045,
+        "support": 5071
+      },
+      "Claim": {
+        "precision": 0.3542,
+        "recall": 0.2392,
+        "f1": 0.2856,
+        "support": 16561
+      },
+      "Counterclaim": {
+        "precision": 0.3367,
+        "recall": 0.2546,
+        "f1": 0.29,
+        "support": 1936
+      },
+      "Rebuttal": {
+        "precision": 0.2633,
+        "recall": 0.1982,
+        "f1": 0.2262,
+        "support": 1594
+      },
+      "Evidence": {
+        "precision": 0.2413,
+        "recall": 0.1667,
+        "f1": 0.1971,
+        "support": 14755
+      },
+      "Concluding Statement": {
+        "precision": 0.4447,
+        "recall": 0.4722,
+        "f1": 0.458,
+        "support": 4477
+      }
+    }
+  },
+  "token_accuracy": 0.755,
+  "illegal_bio_transitions": 429,
+  "overlap_errors": {
+    "boundary_error": 9131,
+    "missed": 11849,
+    "type_error": 2947,
+    "spurious": 1146
+  },
+  "essays": 5154,
+  "model": "bert-base-cased_crf_labelmerge",
+  "split": "test_unseen",
+  "config": {
+    "architecture_model": "bert-base-cased",
+    "decoder": "crf",
+    "epochs": 3,
+    "batch_size": 8,
+    "lr": 2e-05,
+    "head_lr": 0.001,
+    "max_length": 512,
+    "stride": 128,
+    "truncate": false,
+    "seed": 42,
+    "train_essays": 11721,
+    "train_minutes": 79.2,
+    "hardware": "Tesla T4"
+  },
+  "note": "before fix: each window decoded separately, labels merged at window seams"
+}

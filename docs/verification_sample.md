@@ -1,189 +1,232 @@
 # Manual audit of repaired offsets
 
-30 segments (seed 42), stratified: 10 where the segment text appears more than once in the essay (17,631 such segments), 10 with a shift of 3+ characters (85,050), 10 others (181,162).
+30 segments (seed 42), stratified: 10 where the segment text appears more than once in the essay (17,640 such segments), 10 with a shift of 3+ characters (85,049), 10 others (181,154).
 
-Two reviewers check each case independently: read the annotation text, then the essay context, and tick whether the bracketed repaired span is the annotated segment (right occurrence, exact start and end). Record disagreements below.
+**How to review.** Two reviewers check each case independently. A case is correct when both hold:
 
-This audit tests the cases automatic checks cannot: the automatic check proves the repaired slice has the same text as the annotation, not that it is the right occurrence of a repeated phrase.
+1. The repaired span (between ⟦ ⟧) starts and ends at the same words as the annotation text, with nothing missing or extra.
+2. It is the right copy: when the phrase occurs more than once, the chosen copy is the one at the annotator's position (the official start), not another one.
 
-## 1. Unannotated · repeated phrase · essay 332C13592AE6
+The official slice is shown to make the drift visible; it is expected to be off by the shift.
 
-- Official offsets [91:98], repaired [91:98] (shift +0)
-- Context: …at students shouldn't be able to use their phones at school ⟦because⟧ they become distractions for learning. If they use their ph…
+## 1. Unannotated · repeated phrase · essay 3320DB48E48D
+
+- **Annotation text:** 'nd'
+- **Official slice** [246:248]: …ean a decrease in air pollution, alternative transportation,⟦ a⟧nd fewer traffic jams.  Due to a near-record pollution, Pari…
+- **Repaired span** [248:250], shift +2: …n a decrease in air pollution, alternative transportation, a⟦nd⟧ fewer traffic jams.  Due to a near-record pollution, Paris …
+- **Copies of this text start at:** 85, 248 (chosen), 647, 1218, 1627; official start 246
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
-## 2. Claim · repeated phrase · essay 0C25854E9900
+## 2. Unannotated · repeated phrase · essay 0C25854E9900
 
-- Official offsets [284:331], repaired [284:331] (shift +0)
-- Context: …ed. Summer projects should be more student-designed because ⟦Students get to chose what their project is on,⟧ Students may be more interested in the project, and Student…
+- **Annotation text:** 'because'
+- **Official slice** [276:283]: …t-designed. Summer projects should be more student-designed ⟦because⟧ Students get to chose what their project is on, Students ma…
+- **Repaired span** [276:283], shift +0: …t-designed. Summer projects should be more student-designed ⟦because⟧ Students get to chose what their project is on, Students ma…
+- **Copies of this text start at:** 276 (chosen), 970, 1620, 3008, 3450; official start 276
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
-## 3. Unannotated · repeated phrase · essay 82858C701793
+## 3. Unannotated · repeated phrase · essay 8248E7E6E2A0
 
-- Official offsets [115:118], repaired [115:118] (shift +0)
-- Context: … for transportation and to get people to their destination. ⟦But⟧ not everybody thinks cars should be used as much or at all,…
+- **Annotation text:** 'because'
+- **Official slice** [277:284]: …tay healthy. Also because really that's a students free time⟦ becaus⟧e we get to run around and just be free instead of sitting i…
+- **Repaired span** [278:285], shift +1: …ay healthy. Also because really that's a students free time ⟦because⟧ we get to run around and just be free instead of sitting in…
+- **Copies of this text start at:** 145, 235, 278 (chosen), 692, 726, 863, 1064; official start 277
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
-## 4. Claim · repeated phrase · essay 749A62B003A5
+## 4. Claim · repeated phrase · essay 74856C588A12
 
-- Official offsets [1334:1380], repaired [1339:1385] (shift +5)
-- Context: … that they know that what type of metals they need to use.  ⟦Venus is the closes planet to being Earth-like⟧. In paragrapgh 5, it says, "…
+- **Annotation text:** 'they are more likely to do it.'
+- **Official slice** [547:577]: … interests them, decide how extravagant they want it to be a⟦nd they are more likely to do ⟧it.  To begin with, students should design their own project…
+- **Repaired span** [550:580], shift +3: …terests them, decide how extravagant they want it to be and ⟦they are more likely to do it.⟧  To begin with, students should design their own projects s…
+- **Copies of this text start at:** 550 (chosen), 3301; official start 547
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
-## 5. Unannotated · repeated phrase · essay 6A273D6F0816
+## 5. Unannotated · repeated phrase · essay 6A0FF1299F6A
 
-- Official offsets [722:728], repaired [723:729] (shift +1)
-- Context: …e accomplished. Summer projects should be student-designed b⟦ecause⟧ it gives students the ability to work at their own pace, pr…
+- **Annotation text:** 'nd that'
+- **Official slice** [117:124]: …ple of them are that there would be less pollution in the ai⟦r and t⟧hat communities would be set up different to make it easier …
+- **Repaired span** [120:127], shift +3: … of them are that there would be less pollution in the air a⟦nd that⟧ communities would be set up different to make it easier to …
+- **Copies of this text start at:** 120 (chosen), 2321; official start 117
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
-## 6. Unannotated · repeated phrase · essay 412227C301CD
+## 6. Unannotated · repeated phrase · essay 4103156B5B45
 
-- Official offsets [552:554], repaired [552:554] (shift +0)
-- Context: …e beneficial to students recovering from a major operation, ⟦or⟧ a severe social problem.  Serious injuries happen involving…
+- **Annotation text:** 'and'
+- **Official slice** [388:391]: …ows you to get other views, learn from their past experience⟦, a⟧nd make the most educated choice.  First, by getting other o…
+- **Repaired span** [390:393], shift +2: …s you to get other views, learn from their past experience, ⟦and⟧ make the most educated choice.  First, by getting other opi…
+- **Copies of this text start at:** 214, 390 (chosen), 849, 1335, 1698, 1802, 1860, 2019; official start 388
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
-## 7. Unannotated · repeated phrase · essay 2F602EBE7400
+## 7. Unannotated · repeated phrase · essay 2F50204B1124
 
-- Official offsets [228:231], repaired [230:233] (shift +2)
-- Context: …harming us in ways that we dont even realize such as health ⟦and⟧ financially.  Many have been stunned by the effects that ou…
+- **Annotation text:** 'and'
+- **Official slice** [328:331]: …fall tremendously. Many of people's lives would be at risk, ⟦and⟧ it's unhuman.  The economy is my biggest worry when it come…
+- **Repaired span** [328:331], shift +0: …fall tremendously. Many of people's lives would be at risk, ⟦and⟧ it's unhuman.  The economy is my biggest worry when it come…
+- **Copies of this text start at:** 328 (chosen), 481, 584, 714, 742, 777, 811, 987, 1324, 1387, 1678; official start 328
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
-## 8. Unannotated · repeated phrase · essay 2897B71A5E94
+## 8. Unannotated · repeated phrase · essay 289414C57E09
 
-- Official offsets [917:921], repaired [919:923] (shift +2)
-- Context: …ng to help them to have a differet view on what there doing ⟦also⟧ the student could get adictive using the tegnology, and it`…
+- **Annotation text:** 'For one,'
+- **Official slice** [471:479]: …ng System is what the future of learning will be all about. ⟦For one,⟧ it helps teachers figure if students are interested or not,…
+- **Repaired span** [471:479], shift +0: …ng System is what the future of learning will be all about. ⟦For one,⟧ it helps teachers figure if students are interested or not,…
+- **Copies of this text start at:** 471 (chosen), 2834; official start 471
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
-## 9. Unannotated · repeated phrase · essay C6EF9DDBAA4C
+## 9. Claim · repeated phrase · essay C6E1D9D58CEE
 
-- Official offsets [2463:2466], repaired [2467:2470] (shift +4)
-- Context: …hird thing is if a student has more important things to do l⟦ike⟧ study for a test, finish a big project, or finish late home…
+- **Annotation text:** 'the experience'
+- **Official slice** [221:235]: … Cowboys program is an excellent program to join because of ⟦the experience⟧, jobs you could do, and the cost.  Most people have a great…
+- **Repaired span** [221:235], shift +0: … Cowboys program is an excellent program to join because of ⟦the experience⟧, jobs you could do, and the cost.  Most people have a great…
+- **Copies of this text start at:** 221 (chosen), 1907; official start 221
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
-## 10. Claim · repeated phrase · essay 0EF91AC5D457
+## 10. Unannotated · repeated phrase · essay 0EF652533E77
 
-- Official offsets [126:228], repaired [126:228] (shift +0)
-- Context: … to adress the positivity in keeping the Electoral College. ⟦The Electoral College has a small chance of winning with a Electoral College vote than a popular vote.⟧ Every state is important because everyone's a president. Al…
+- **Annotation text:** 'ecause'
+- **Official slice** [159:165]: …heir break. I think the projects should be teacher designed ⟦becaus⟧e the project will designed for what they need to learn and …
+- **Repaired span** [160:166], shift +1: …eir break. I think the projects should be teacher designed b⟦ecause⟧ the project will designed for what they need to learn and t…
+- **Copies of this text start at:** 160 (chosen), 366, 780, 1297, 1455; official start 159
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
 ## 11. Concluding Statement · shift of 3+ characters · essay 0C2CF6C57038
 
-- Official offsets [1868:2159], repaired [1878:2169] (shift +10)
-- Context: …here was life on Mars, because Nasa's budget has been cut.  ⟦This is why the "Face on Mars"  is only just a landform with shadows on it that makes it look like a ...  that there is a life form on Mars, but for know we know that the "Face on Mars" is just a landform.⟧…
+- **Annotation text:** 'This is why the "Face on Mars"\n\nis only just a landform with shadows on it that makes it look like a …  that there is a life form on Mars, but for know we know that the "Face on Mars" is just a landform.'
+- **Official slice** [1868:2159]: … know if there was life on Mars, because Nasa's budget has b⟦een cut.  This is why the "Face on Mars"  is only just a landform with shadows on it that makes it l … e a chance that there is a life form on Mars, but for know we know that the "Face on Mars" is just a⟧ landform.…
+- **Repaired span** [1878:2169], shift +10: …here was life on Mars, because Nasa's budget has been cut.  ⟦This is why the "Face on Mars"  is only just a landform with shadows on it that makes it look like a …  that there is a life form on Mars, but for know we know that the "Face on Mars" is just a landform.⟧…
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
 ## 12. Counterclaim · shift of 3+ characters · essay 26F0870BE37F
 
-- Official offsets [3040:3160], repaired [3044:3164] (shift +4)
-- Context: …ken away, as their teacher could be hundreds of miles away. ⟦Some might argue that with the introduction of video conferencing this lack of proper communication would be eliminated.⟧ However, with online school that could be streaming across …
+- **Annotation text:** 'Some might argue that with the introduction of video conferencing this lack of proper communication would be eliminated.'
+- **Official slice** [3040:3160]: …s taken away, as their teacher could be hundreds of miles aw⟦ay. Some might argue that with the introduction of video conferencing this lack of proper communication would be elimina⟧ted. However, with online school that could be streaming acr…
+- **Repaired span** [3044:3164], shift +4: …ken away, as their teacher could be hundreds of miles away. ⟦Some might argue that with the introduction of video conferencing this lack of proper communication would be eliminated.⟧ However, with online school that could be streaming across …
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
 ## 13. Unannotated · shift of 3+ characters · essay 573D3A222492
 
-- Official offsets [565:680], repaired [568:682] (shift +3)
-- Context: …heir friends they would have never decided what they want.  ⟦Seeking multiple opinions can help someone make a better choice because they can find the best answer or solution.⟧ Searching for a good answer is like looking for the best an…
+- **Annotation text:** 'Seeking multiple opinions can help someone make a better choice because they can find the best answer or solution.'
+- **Official slice** [565:680]: …t their friends they would have never decided what they want⟦.  Seeking multiple opinions can help someone make a better choice because they can find the best answer or solutio⟧n. Searching for a good answer is like looking for the best …
+- **Repaired span** [568:682], shift +3: …heir friends they would have never decided what they want.  ⟦Seeking multiple opinions can help someone make a better choice because they can find the best answer or solution.⟧ Searching for a good answer is like looking for the best an…
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
 ## 14. Claim · shift of 3+ characters · essay 5C9E6CCEAF57
 
-- Official offsets [1149:1229], repaired [1152:1232] (shift +3)
-- Context: … their experience and maybe do the same thing as they did.  ⟦Asking more than one person for advice can also help you make a better decision.⟧ Some people might have a lot of knowledge about the topic y…
+- **Annotation text:** 'Asking more than one person for advice can also help you make a better decision.'
+- **Official slice** [1149:1229]: …out their experience and maybe do the same thing as they did⟦.  Asking more than one person for advice can also help you make a better decisi⟧on. Some people might have a lot of knowledge about the topi…
+- **Repaired span** [1152:1232], shift +3: … their experience and maybe do the same thing as they did.  ⟦Asking more than one person for advice can also help you make a better decision.⟧ Some people might have a lot of knowledge about the topic y…
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
-## 15. Claim · shift of 3+ characters · essay C6FEDB129649
+## 15. Evidence · shift of 3+ characters · essay C6FEDB129649
 
-- Official offsets [1199:1326], repaired [1202:1329] (shift +3)
-- Context: … they will be able to manage their time and work efficently ⟦. For example , If every class is the same length but one student is able to learn and peform well in math better than science.⟧ They could start the day with math so they can get a better…
+- **Annotation text:** 'They could start the day with math so they can get a better understanding and spend more time on the … hey are spending the most time on what really matters so they can fully expierence a good education.'
+- **Official slice** [1327:1679]: … is able to learn and peform well in math better than scienc⟦e. They could start the day with math so they can get a better understanding and spend more time on  … f they are spending the most time on what really matters so they can fully expierence a good educati⟧on.  Many students struggle with school and it isn't because…
+- **Repaired span** [1330:1682], shift +3: … able to learn and peform well in math better than science. ⟦They could start the day with math so they can get a better understanding and spend more time on the … hey are spending the most time on what really matters so they can fully expierence a good education.⟧  Many students struggle with school and it isn't because th…
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
-## 16. Claim · shift of 3+ characters · essay ED6B6A38F98D
+## 16. Evidence · shift of 3+ characters · essay ED6B6A38F98D
 
-- Official offsets [1202:1349], repaired [1205:1352] (shift +3)
-- Context: …iggest electon crisis in a century  sya (Bradford Plumer).  ⟦The electoral college should be kept because it cause less stress on big states than it will on small states. And it helps advoid run off electoral⟧ to where not just one candidate get all votes  like nixon a…
+- **Annotation text:** 'to where not just one candidate get all votes\xa0 like nixon and clinton because both only had 43% of plurality majority in the Electoral College.'
+- **Official slice** [1350:1493]: …it will on small states. And it helps advoid run off elector⟦al to where not just one candidate get all votes  like nixon and clinton because both only had 43% of plurality majority in the Electoral Colle⟧ge.  These are some reasons why electoral college should and…
+- **Repaired span** [1353:1496], shift +3: …will on small states. And it helps advoid run off electoral ⟦to where not just one candidate get all votes  like nixon and clinton because both only had 43% of plurality majority in the Electoral College.⟧  These are some reasons why electoral college should and sh…
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
 ## 17. Evidence · shift of 3+ characters · essay 0AB1AF1AE293
 
-- Official offsets [2692:4141], repaired [2698:4147] (shift +6)
-- Context: …any situation.  The importance of understanding each other. ⟦People tend to seem more dramatic and not understanding at all when it comes to situations and they  ...  causes more problems to occur. Thats why I think knowing how to understand each other is important.⟧  Those reasons are on why asking multiple people for advice…
+- **Annotation text:** 'People tend to seem more dramatic and not understanding at all when it comes to situations and they  …  causes more problems to occur. Thats why I think knowing how to understand each other is important.'
+- **Official slice** [2692:4141]: …mpact any situation.  The importance of understanding each o⟦ther. People tend to seem more dramatic and not understanding at all when it comes to situations and … t just causes more problems to occur. Thats why I think knowing how to understand each other is impo⟧rtant.  Those reasons are on why asking multiple people for …
+- **Repaired span** [2698:4147], shift +6: …any situation.  The importance of understanding each other. ⟦People tend to seem more dramatic and not understanding at all when it comes to situations and they  …  causes more problems to occur. Thats why I think knowing how to understand each other is important.⟧  Those reasons are on why asking multiple people for advice…
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
-## 18. Evidence · shift of 3+ characters · essay DD769E98B1FF
+## 18. Unannotated · shift of 3+ characters · essay DD769E98B1FF
 
-- Official offsets [430:784], repaired [433:786] (shift +3)
-- Context: …efits.  Sports are a good extracurricular activity to try.  ⟦There is such a large variety of sports for you to try that you will always find something that you  ...  of new things.  Playing sports opens up so many more opportunities for anyone, no matter the sport.⟧  Another option would be getting involved with a theater.  …
+- **Annotation text:** 'Another option would be getting involved with a theater.'
+- **Official slice** [785:842]: …p so many more opportunities for anyone, no matter the sport⟦.  Another option would be getting involved with a theate⟧r.  While part of a theater you get to experience either bei…
+- **Repaired span** [788:844], shift +3: …o many more opportunities for anyone, no matter the sport.  ⟦Another option would be getting involved with a theater.⟧  While part of a theater you get to experience either being…
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
 ## 19. Concluding Statement · shift of 3+ characters · essay 4F9E529C1FBD
 
-- Official offsets [781:923], repaired [786:928] (shift +5)
-- Context: … to go to college and be successful in our everyday lives.  ⟦My point is think about what you put off make the right decision see where the children are if they have extra time they could it after school⟧ . Otherwise do what's best for you.  sincerely, STUDENT_NAM…
+- **Annotation text:** 'My point is think about what you put off make the right decision see where the children are if they have extra time they could it after school'
+- **Official slice** [781:923]: …ation to go to college and be successful in our everyday liv⟦es.  My point is think about what you put off make the right decision see where the children are if they have extra time they could it after s⟧chool . Otherwise do what's best for you.  sincerely, STUDEN…
+- **Repaired span** [786:928], shift +5: … to go to college and be successful in our everyday lives.  ⟦My point is think about what you put off make the right decision see where the children are if they have extra time they could it after school⟧ . Otherwise do what's best for you.  sincerely, STUDENT_NAM…
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
-## 20. Unannotated · shift of 3+ characters · essay D76047B8987A
+## 20. Evidence · shift of 3+ characters · essay D76047B8987A
 
-- Official offsets [716:732], repaired [719:734] (shift +3)
-- Context: …ways helping people in need by giving them animals to eat.  ⟦For the record,⟧ you can see amazing monuments and other amazing things by j…
+- **Annotation text:** 'You get to see these things for free because you have to go to some places like how I saw the Acropo …  I was on the ship, Iturned 18 and they said to keep going for my service and so that made me happy.'
+- **Official slice** [809:1132]: …azing monuments and other amazing things by just volunteerin⟦g. You get to see these things for free because you have to go to some places like how I saw the Acr … en I was on the ship, Iturned 18 and they said to keep going for my service and so that made me happ⟧y.  Finally, you get to have afun way back. I know because t…
+- **Repaired span** [812:1134], shift +3: …ng monuments and other amazing things by just volunteering. ⟦You get to see these things for free because you have to go to some places like how I saw the Acropo …  I was on the ship, Iturned 18 and they said to keep going for my service and so that made me happy.⟧  Finally, you get to have afun way back. I know because the…
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
-## 21. Unannotated · other · essay 9C2E6F09CC73
+## 21. Concluding Statement · other · essay 9C2E6F09CC73
 
-- Official offsets [1934:1946], repaired [1936:1947] (shift +2)
-- Context: … politicians whose job in life is to preserve our country  C⟦ounterclaim⟧  The electoral college is not of a democracy, but of a dict…
+- **Annotation text:** 'Things like the electoral college make me proud to live in the United States of America,\xa0 the greatest country in the world.'
+- **Official slice** [3083:3207]: …d in these past times, know that they have surely been heard⟦. Things like the electoral college make me proud to live in the United States of America,  the greatest country in the worl⟧d.    …
+- **Repaired span** [3085:3209], shift +2: …in these past times, know that they have surely been heard. ⟦Things like the electoral college make me proud to live in the United States of America,  the greatest country in the world.⟧    …
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
-## 22. Position · other · essay 51EFEB9D8D09
+## 22. Unannotated · other · essay 51F05D3678EA
 
-- Official offsets [0:164], repaired [0:164] (shift +0)
-- Context: …⟦Asking others for advice can be a good strategy for getting a solid idea on almost anything. Asking multiple people could be a good idea even if you trust yourself.⟧ Different people have different ideas on different topics. …
+- **Annotation text:** 'Phones & Driving'
+- **Official slice** [0:17]: …⟦Phones & Driving ⟧ They're car accidents everyday do to the several of reason.…
+- **Repaired span** [0:16], shift +0: …⟦Phones & Driving⟧  They're car accidents everyday do to the several of reason…
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
-## 23. Counterclaim · other · essay A6B037934481
+## 23. Position · other · essay A6B1EBD03706
 
-- Official offsets [592:792], repaired [593:793] (shift +1)
-- Context: …actually show you what to do in person rather than online.  ⟦Most students take there classes online because some of them can't concentrate in class or they easily get distracted. I can most certainly say I get distracted in class because for one I love to talk⟧, but I also get my work done because I know how to muti-tas…
+- **Annotation text:** 'I believe that students should be required to do this.'
+- **Official slice** [124:178]: …er or not to require students to perform community service. ⟦I believe that students should be required to do this.⟧  I believe students should perform community service becaus…
+- **Repaired span** [124:178], shift +0: …er or not to require students to perform community service. ⟦I believe that students should be required to do this.⟧  I believe students should perform community service becaus…
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
-## 24. Evidence · other · essay DAC85E32DCED
+## 24. Position · other · essay DACAA57BB2DA
 
-- Official offsets [701:1698], repaired [701:1698] (shift +0)
-- Context: … there are people who are successful and stories behind it. ⟦For example, Bill Gates at a young age used to work with Steve Jobs who was a very successful busine ... cognized as one of the most successful businessman in the world and one of the most wealthy as well.⟧ What we learned out of this is that when you ask people to …
+- **Annotation text:** 'If I were the principal, I would have pick Policy 1: Allow students to bring phones to school and us … m during lunch periods and other free times, as long as the phones are turned off during class time.'
+- **Official slice** [243:448]: …been using their phones when the teacher is giving lessons. ⟦If I were the principal, I would have pick Policy 1: Allow students to bring phones to school and us … m during lunch periods and other free times, as long as the phones are turned off during class time.⟧  You must look at their perspective. If you have picked Pol…
+- **Repaired span** [243:448], shift +0: …been using their phones when the teacher is giving lessons. ⟦If I were the principal, I would have pick Policy 1: Allow students to bring phones to school and us … m during lunch periods and other free times, as long as the phones are turned off during class time.⟧  You must look at their perspective. If you have picked Pol…
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
-## 25. Position · other · essay 67D42552C387
+## 25. Claim · other · essay 67D42552C387
 
-- Official offsets [17:122], repaired [17:122] (shift +0)
-- Context: …Dear Principal,  ⟦I think policy two is the best idea ,you should not let students have there cell phones in school at all.⟧ I think this because this could be a big distraction to the…
+- **Annotation text:** 'When students use there phone that is mainly what they focus on when they are talking on the phone or texting'
+- **Official slice** [319:428]: … they could send answers to a important test through a text.⟦  When students use there phone that is mainly what they focus on when they are talking on the phone or texti⟧ng . They may get in trouble using there phones because they…
+- **Repaired span** [321:430], shift +2: …hey could send answers to a important test through a text.  ⟦When students use there phone that is mainly what they focus on when they are talking on the phone or texting⟧ . They may get in trouble using there phones because they a…
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
 ## 26. Claim · other · essay 02B12E0E4025
 
-- Official offsets [455:554], repaired [456:555] (shift +1)
-- Context: …d be disruptive to others and disrespectful to the teacher. ⟦We would also be willing to wither turn them off or put them on silent while we are in the library.⟧  There are times when we may need to use our cell phones th…
+- **Annotation text:** 'We would also be willing to wither turn them off or put them on silent while we are in the library.'
+- **Official slice** [455:554]: …ld be disruptive to others and disrespectful to the teacher.⟦ We would also be willing to wither turn them off or put them on silent while we are in the library⟧.  There are times when we may need to use our cell phones t…
+- **Repaired span** [456:555], shift +1: …d be disruptive to others and disrespectful to the teacher. ⟦We would also be willing to wither turn them off or put them on silent while we are in the library.⟧  There are times when we may need to use our cell phones th…
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
-## 27. Rebuttal · other · essay 3B20A3B52316
+## 27. Counterclaim · other · essay 3B20A3B52316
 
-- Official offsets [1730:1836], repaired [1730:1836] (shift +0)
-- Context: …t teachers can pick just as fascinating topics as students. ⟦However, because of age gaps and other variables many teacher do not know what students find entertaining.⟧  Student-summer-packet-designers know what material to incl…
+- **Annotation text:** 'People might suggest that teachers know the material the best so they will form the best summer packet.'
+- **Official slice** [2262:2365]: …gled with; allowing the new students to be better prepared. ⟦People might suggest that teachers know the material the best so they will form the best summer packet.⟧ However, students know what they struggled with more than t…
+- **Repaired span** [2262:2365], shift +0: …gled with; allowing the new students to be better prepared. ⟦People might suggest that teachers know the material the best so they will form the best summer packet.⟧ However, students know what they struggled with more than t…
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
-## 28. Claim · other · essay 9D68CE2763CB
+## 28. Unannotated · other · essay 9D68CE2763CB
 
-- Official offsets [73:125], repaired [73:125] (shift +0)
-- Context: …e with everyone being forced to participate in an activity. ⟦Many students have personal issues going on at home,⟧ they might not be athletically inclined or creative, or the…
+- **Annotation text:** 'Some students might not be athletically inclined or creative.'
+- **Official slice** [561:623]: …getting arrested. Some of them face many more difficulties. ⟦ Some students might not be athletically inclined or creative.⟧ Kids may dislike sport activities due to many reasons. Stud…
+- **Repaired span** [562:623], shift +1: …etting arrested. Some of them face many more difficulties.  ⟦Some students might not be athletically inclined or creative.⟧ Kids may dislike sport activities due to many reasons. Stud…
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
-## 29. Claim · other · essay 7F697EF803C9
+## 29. Evidence · other · essay 7F74864D0865
 
-- Official offsets [1128:1188], repaired [1130:1190] (shift +2)
-- Context: … then a higher percentage of students will actually do it.  ⟦Student designing the project can be a benefit of there own.⟧ How can it be a benefit? Well, when the students come toget…
+- **Annotation text:** "The electoral vote college is more like a process that mean it's of 538 electors , if more than the  … cted, but the people of the state want the popular vote because they want to choose their president."
+- **Official slice** [134:371]: …y a popular vote of qualified for what president they want. ⟦ The electoral vote college is more like a process that mean it's of 538 electors , if more than the … ected, but the people of the state want the popular vote because they want to choose their president⟧.  Each candidate going for president has hes own group and …
+- **Repaired span** [135:372], shift +1: … a popular vote of qualified for what president they want.  ⟦The electoral vote college is more like a process that mean it's of 538 electors , if more than the  … cted, but the people of the state want the popular vote because they want to choose their president.⟧  Each candidate going for president has hes own group and t…
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
-## 30. Evidence · other · essay 67B4E798A5B4
+## 30. Rebuttal · other · essay 67B9393299B6
 
-- Official offsets [129:3263], repaired [130:3264] (shift +1)
-- Context: …Venus is a worthy pursuit despite the dangers it presemts.  ⟦The author supports this idea. That Venus is actually a planet. in our solar system, Venus is the se ... d by dangers and doubts but should be expanded to meet the very edges of imagination and innovation.⟧…
+- **Annotation text:** 'but thats not how it works. Imagine the small states, no canidate is going to spend time in a state  … appen in the mist of this selection where the results can end up in a tie which would cause worries.'
+- **Official slice** [517:1010]: …"What the problem with that it seems like a simple process" ⟦but thats not how it works. Imagine the small states, no canidate is going to spend time in a state  … appen in the mist of this selection where the results can end up in a tie which would cause worries.⟧ Electoral college is irrational, unfair, and outdated and s…
+- **Repaired span** [517:1010], shift +0: …"What the problem with that it seems like a simple process" ⟦but thats not how it works. Imagine the small states, no canidate is going to spend time in a state  … appen in the mist of this selection where the results can end up in a tie which would cause worries.⟧ Electoral college is irrational, unfair, and outdated and s…
 - [ ] Reviewer A: correct   - [ ] Reviewer B: correct
 
 ## Result

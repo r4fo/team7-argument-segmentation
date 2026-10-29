@@ -19,6 +19,8 @@ E. Token labels: decode our BIO labels back into spans and compare their text
    with the repaired segment text.
 F. Impact: build BIO labels from the official offsets as released and count
    how many tokens get a different label than with the repaired offsets.
+H. Repeated phrases: when a segment's text occurs more than once in its
+   essay, is the copy we chose the one nearest to the released start offset?
 G. Manual audit sample: write a stratified sample of segments (repeated
    phrases, large shifts, others) with their essay context to a Markdown
    file for two reviewers to check.
@@ -123,8 +125,22 @@ def main():
                 break
             c["C_text_equal"] += 1
             shifts.append(start - official[j][0])
-            repeated = text.count(texts[j]) > 1
-            audit_pool.append((eid, dtype, official[j][0], official[j][1], start, end, repeated))
+            occurrences, m = [], text.find(texts[j])
+            while m != -1:
+                occurrences.append(m)
+                m = text.find(texts[j], m + 1)
+            repeated = len(occurrences) > 1
+            if repeated:
+                # H: is the chosen copy the one nearest to where the annotator pointed?
+                nearest = min(occurrences, key=lambda m: abs(m - official[j][0]))
+                kind = "arg" if dtype in TYPES else "unannotated"
+                c[f"H_repeated_{kind}"] += 1
+                c[f"H_nearest_{kind}"] += start == nearest
+                c["H_repeated_segments"] += 1
+                c["H_chose_nearest_copy"] += start == nearest
+            audit_pool.append(
+                (eid, dtype, official[j][0], official[j][1], start, end, repeated, texts[j], occurrences)
+            )
             j += 1
 
         # ---- D: drift shape
@@ -185,27 +201,42 @@ def main():
         f"{per} with a shift of 3+ characters ({len(strata['shift of 3+ characters']):,}), "
         f"{per} others ({len(strata['other']):,}).",
         "",
-        "Two reviewers check each case independently: read the annotation text, then the "
-        "essay context, and tick whether the bracketed repaired span is the annotated "
-        "segment (right occurrence, exact start and end). Record disagreements below.",
+        "**How to review.** Two reviewers check each case independently. A case is "
+        "correct when both hold:",
         "",
-        "This audit tests the cases automatic checks cannot: the automatic check proves the "
-        "repaired slice has the same text as the annotation, not that it is the right "
-        "occurrence of a repeated phrase.",
+        "1. The repaired span (between ⟦ ⟧) starts and ends at the same words as the "
+        "annotation text, with nothing missing or extra.",
+        "2. It is the right copy: when the phrase occurs more than once, the chosen copy "
+        "is the one at the annotator's position (the official start), not another one.",
+        "",
+        "The official slice is shown to make the drift visible; it is expected to be off by "
+        "the shift.",
         "",
     ]
-    for k, (stratum, (eid, dtype, os_, oe, rs, re_, _)) in enumerate(rows, 1):
-        t = texts_by_id[eid]
-        before = t[max(0, rs - 60) : rs].replace("\n", " ")
-        after = t[re_ : re_ + 60].replace("\n", " ")
-        span = t[rs:re_].replace("\n", " ")
+
+    def show(t, s, e, width=60):
+        span = t[s:e].replace("\n", " ")
         if len(span) > 200:
-            span = span[:100] + " ... " + span[-100:]
+            span = span[:100] + " … " + span[-100:]
+        before = t[max(0, s - width) : s].replace("\n", " ")
+        after = t[e : e + width].replace("\n", " ")
+        return f"…{before}⟦{span}⟧{after}…"
+
+    for k, (stratum, row) in enumerate(rows, 1):
+        eid, dtype, os_, oe, rs, re_, _, ann, occ = row
+        t = texts_by_id[eid]
+        ann_short = ann if len(ann) <= 200 else ann[:100] + " … " + ann[-100:]
         lines += [
             f"## {k}. {dtype} · {stratum} · essay {eid}",
             "",
-            f"- Official offsets [{os_}:{oe}], repaired [{rs}:{re_}] (shift {rs - os_:+d})",
-            f"- Context: …{before}⟦{span}⟧{after}…",
+            f"- **Annotation text:** {ann_short!r}",
+            f"- **Official slice** [{os_}:{oe}]: {show(t, os_, oe)}",
+            f"- **Repaired span** [{rs}:{re_}], shift {rs - os_:+d}: {show(t, rs, re_)}",
+        ]
+        if len(occ) > 1:
+            where = ", ".join(f"{m}{' (chosen)' if m == rs else ''}" for m in occ)
+            lines.append(f"- **Copies of this text start at:** {where}; official start {os_}")
+        lines += [
             "- [ ] Reviewer A: correct   - [ ] Reviewer B: correct",
             "",
         ]
@@ -233,6 +264,12 @@ def main():
         "E_essays_span_count_mismatch": c["E_essays_count_mismatch"],
         "F_tokens_with_different_label_pct": pct(c["F_tokens_changed"], c["F_tokens"]),
         "F_spans_with_different_token_boundaries_pct": pct(c["F_spans_boundary_changed"], c["F_spans"]),
+        "H_repeated_phrase_segments": c["H_repeated_segments"],
+        "H_chose_copy_nearest_official_start_pct": pct(c["H_chose_nearest_copy"], c["H_repeated_segments"]),
+        "H_argument_segments_repeated": c["H_repeated_arg"],
+        "H_argument_segments_nearest_copy_pct": pct(c["H_nearest_arg"], c["H_repeated_arg"]),
+        "H_unannotated_segments_repeated": c["H_repeated_unannotated"],
+        "H_unannotated_segments_nearest_copy_pct": pct(c["H_nearest_unannotated"], c["H_repeated_unannotated"]),
         "F_changed_pct_by_true_label": {
             t: pct(v[0], v[1]) for t, v in sorted(impact_by_type.items())
         },

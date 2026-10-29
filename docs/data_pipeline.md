@@ -88,16 +88,28 @@ python src/verify_alignment.py \
 | Repaired segments out of order or overlapping | 0 |
 | BIO labels decode back to the same span types | 100.00% |
 | Decoded spans cover the same text as repaired segments | 99.77% (rest: tokens straddling a boundary) |
+| Repeated phrases: chosen copy is the one nearest the released start, argument segments (4,466) | 100.00% |
+| Same, Unannotated segments (13,174; the 57 exceptions are 1–2 character fragments that become O) | 99.57% |
 | Tokens labelled differently with released offsets | 2.57% |
 | Spans with different token boundaries with released offsets | 62.14% |
 
 The automatic checks prove that each repaired slice has the same text as its
 annotation. They cannot prove it is the right occurrence when the phrase
-appears twice in an essay (17,631 segments). For that, the script writes
+appears twice in an essay (17,640 segments). For that, the script writes
 `docs/verification_sample.md`: 30 segments (seed 42), stratified into 10
 repeated-phrase cases, 10 with a shift of 3+ characters and 10 others, each
 shown in its essay context, for two reviewers to check independently. Thirty
 cases catch systematic errors; they do not estimate a population error rate.
+
+| Reviewer | Date | Correct | Wrong |
+| --- | --- | --- | --- |
+| A (Rafik Ajam) | 2026-10-29 | 30 / 30 | 0 |
+| B | pending | | |
+
+Reviewer A checked repeated-phrase cases against the full essay text in the
+raw CSV, for example essay 8248E7E6E2A0, where "because" occurs seven times:
+the chosen copy (start 278) is the one between the annotated Claim and
+Evidence, one character after the released start (277).
 
 ## Labels
 
