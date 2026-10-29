@@ -1,0 +1,124 @@
+{
+  "overlap_span": {
+    "macro_f1": 0.3679,
+    "micro_f1": 0.3802,
+    "per_class": {
+      "Lead": {
+        "precision": 0.3909,
+        "recall": 0.8051,
+        "f1": 0.5263,
+        "support": 4331
+      },
+      "Position": {
+        "precision": 0.3775,
+        "recall": 0.6282,
+        "f1": 0.4716,
+        "support": 7704
+      },
+      "Claim": {
+        "precision": 0.2738,
+        "recall": 0.4864,
+        "f1": 0.3504,
+        "support": 24089
+      },
+      "Counterclaim": {
+        "precision": 0.1645,
+        "recall": 0.3687,
+        "f1": 0.2275,
+        "support": 2718
+      },
+      "Rebuttal": {
+        "precision": 0.1129,
+        "recall": 0.2831,
+        "f1": 0.1614,
+        "support": 2049
+      },
+      "Evidence": {
+        "precision": 0.2628,
+        "recall": 0.6097,
+        "f1": 0.3673,
+        "support": 22475
+      },
+      "Concluding Statement": {
+        "precision": 0.3307,
+        "recall": 0.818,
+        "f1": 0.471,
+        "support": 6545
+      }
+    }
+  },
+  "exact_span": {
+    "macro_f1": 0.1678,
+    "micro_f1": 0.1577,
+    "per_class": {
+      "Lead": {
+        "precision": 0.1887,
+        "recall": 0.3886,
+        "f1": 0.254,
+        "support": 4331
+      },
+      "Position": {
+        "precision": 0.2158,
+        "recall": 0.3592,
+        "f1": 0.2696,
+        "support": 7704
+      },
+      "Claim": {
+        "precision": 0.1213,
+        "recall": 0.2155,
+        "f1": 0.1552,
+        "support": 24089
+      },
+      "Counterclaim": {
+        "precision": 0.0695,
+        "recall": 0.1556,
+        "f1": 0.096,
+        "support": 2718
+      },
+      "Rebuttal": {
+        "precision": 0.0438,
+        "recall": 0.1098,
+        "f1": 0.0626,
+        "support": 2049
+      },
+      "Evidence": {
+        "precision": 0.076,
+        "recall": 0.1763,
+        "f1": 0.1062,
+        "support": 22475
+      },
+      "Concluding Statement": {
+        "precision": 0.1621,
+        "recall": 0.4011,
+        "f1": 0.2309,
+        "support": 6545
+      }
+    }
+  },
+  "token_accuracy": 0.7647,
+  "illegal_bio_transitions": 85050,
+  "overlap_errors": {
+    "type_error": 5776,
+    "missed": 11131,
+    "boundary_error": 12320,
+    "spurious": 7474
+  },
+  "essays": 7819,
+  "model": "bert-base-cased_softmax",
+  "split": "test_seen",
+  "config": {
+    "architecture_model": "bert-base-cased",
+    "decoder": "softmax",
+    "epochs": 3,
+    "batch_size": 8,
+    "lr": 2e-05,
+    "head_lr": 0.001,
+    "max_length": 512,
+    "stride": 128,
+    "truncate": false,
+    "seed": 42,
+    "train_essays": 11721,
+    "train_minutes": 29.4,
+    "hardware": "Tesla T4"
+  }
+}
