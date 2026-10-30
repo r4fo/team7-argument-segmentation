@@ -22,6 +22,13 @@ Usage (Colab, T4 GPU)
     # truncation analysis: score a trained model reading only the first window
     python src/trainers/train_token_clf.py --model bert-base-cased --decoder crf \
         --predict-only --truncate --out-dir /content/drive/MyDrive/team7_checkpoints
+
+    # offset-repair ablation: train on unrepaired labels, score on repaired tests
+    python src/prepare_data.py --train-zip data/raw/persuade_corpus_2.0_train.zip \
+        --test-zip data/raw/persuade_corpus_2.0_test.zip --no-repair --out-dir data/unrepaired
+    python src/trainers/train_token_clf.py --model bert-base-cased --decoder crf \
+        --train-data-dir data/unrepaired --run-name bert-base-cased_crf_unrepaired \
+        --out-dir /content/drive/MyDrive/team7_checkpoints
 """
 
 from __future__ import annotations
@@ -175,6 +182,9 @@ def main():
     ap.add_argument("--model", default="bert-base-cased")
     ap.add_argument("--decoder", choices=["softmax", "crf"], default="softmax")
     ap.add_argument("--data-dir", type=Path, default=Path("data/processed"))
+    ap.add_argument("--train-data-dir", type=Path, default=None,
+                    help="read train and val from here instead (offset-repair ablation); "
+                         "test sets always come from --data-dir")
     ap.add_argument("--results-dir", type=Path, default=Path("results"))
     ap.add_argument("--out-dir", type=Path, default=Path("checkpoints"),
                     help="checkpoints (use a Google Drive folder on Colab)")
@@ -217,7 +227,8 @@ def main():
     limit = {"train": 64, "val": 32, "test_seen": 32, "test_unseen": 32} if args.smoke else {}
     data = {}
     for split in ("train", "val", "test_seen", "test_unseen"):
-        recs = list(read_jsonl(args.data_dir / f"{split}.jsonl.gz"))
+        src = args.train_data_dir if args.train_data_dir and split in ("train", "val") else args.data_dir
+        recs = list(read_jsonl(src / f"{split}.jsonl.gz"))
         if split in limit:
             recs = random.Random(args.seed).sample(recs, limit[split])
         data[split] = recs
@@ -327,6 +338,7 @@ def main():
                 "max_length": args.max_length,
                 "stride": args.stride,
                 "truncate": args.truncate,
+                "train_labels": "released offsets (unrepaired)" if args.train_data_dir else "repaired offsets",
                 "seed": args.seed,
                 "train_essays": len(data["train"]),
                 "train_minutes": train_minutes,

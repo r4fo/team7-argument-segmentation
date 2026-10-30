@@ -24,6 +24,12 @@ Usage
         --train-zip data/raw/persuade_corpus_2.0_train.zip \
         --test-zip data/raw/persuade_corpus_2.0_test.zip \
         --out-dir data/processed
+
+Offset-repair ablation: the same pipeline without step 2, labelling from the
+released offsets as they are (not committed; only its train and val are used,
+to train a model that is then scored on the repaired test sets):
+
+    python src/prepare_data.py ... --no-repair --out-dir data/unrepaired
 """
 
 from __future__ import annotations
@@ -140,6 +146,20 @@ def align_segments(essay_text: str, segs: pd.DataFrame, report: Counter):
     return aligned
 
 
+def released_spans(segs: pd.DataFrame, report: Counter):
+    """[(start, end, type)] from the released offsets, unrepaired (ablation only)."""
+    spans = []
+    for seg in segs.itertuples(index=False):
+        raw = seg.discourse_text if isinstance(seg.discourse_text, str) else ""
+        report["segments_total"] += 1
+        if not raw.strip():
+            report["dropped_empty_text"] += 1
+            continue
+        spans.append((int(seg.discourse_start), int(seg.discourse_end), seg.discourse_type))
+        report["released_offsets_used"] += 1
+    return spans
+
+
 # ---------------------------------------------------------------- labelling
 def tokenize(text: str):
     return [(m.group(), m.start(), m.end()) for m in TOKEN_RE.finditer(text)]
@@ -228,6 +248,8 @@ def main():
     ap.add_argument("--held-out", nargs="+", default=DEFAULT_HELD_OUT)
     ap.add_argument("--val-fraction", type=float, default=0.1)
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--no-repair", action="store_true",
+                    help="label from the released offsets as they are (offset-repair ablation)")
     args = ap.parse_args()
 
     df = pd.concat(
@@ -268,7 +290,10 @@ def main():
     for eid, segs in grouped:
         meta = segs.iloc[0]
         text = meta.full_text
-        spans = align_segments(text, segs, report)
+        if args.no_repair:
+            spans = released_spans(segs, report)
+        else:
+            spans = align_segments(text, segs, report)
         tokens = tokenize(text)
         labels = bio_labels(tokens, spans, report)
 
