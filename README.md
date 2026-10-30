@@ -67,8 +67,8 @@ What is measured and what is not:
 | `docs/data_pipeline.md` | Every cleaning step, why it is needed, and its counts | Done |
 | `docs/verification_sample.md` | Stratified manual audit of 30 repaired segments, two reviewers | Both reviewers 30/30 |
 | `docs/metrics_protocol.md` | Metrics, why we use them, and the planned analyses | Done |
-| `results/` | `benchmark.md` table and one results JSON per model and split | Baseline 1 done |
-| `contributions/` | One file per member, named `<NAME>_<STUDENT_ID>_<GITHUB_USERNAME>.md` | To do |
+| `results/` | `benchmark.md` table and one results JSON per model and split | Rows 1 and 3–6 done; row 2 rerun on all training essays in progress |
+| `contributions/` | One file per member, named `<NAME>_<STUDENT_ID>_<GITHUB_USERNAME>.md` | 4 of 5 members |
 
 ## Reproduce the data
 
