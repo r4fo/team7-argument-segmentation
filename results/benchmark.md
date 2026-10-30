@@ -6,7 +6,7 @@ No row is filled until `src/evaluate.py` produced it; each filled row links its 
 | # | Architecture | Specific model | Decoder | Seen: overlap F1 | Seen: exact F1 | Unseen: overlap F1 | Unseen: exact F1 | Illegal BIO (seen) | Results file |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | Lookup | Most-frequent tag per word | Argmax | 0.0321 | 0.0001 | 0.0311 | 0.0000 | 83,207 | [seen](most_frequent_test_seen.json), [unseen](most_frequent_test_unseen.json) |
-| 2 | Linear-chain CRF | sklearn-crfsuite, hand features (3,000 training essays) | Viterbi | 0.4139 | 0.2210 | 0.3275 | 0.1659 | 3 | [seen](crf_features_test_seen.json), [unseen](crf_features_test_unseen.json) |
+| 2 | Linear-chain CRF | sklearn-crfsuite, hand features | Viterbi | 0.4333 | 0.2418 | 0.3260 | 0.1663 | 2 | [seen](crf_features_test_seen.json), [unseen](crf_features_test_unseen.json) |
 | 3 | BiLSTM | 2-layer BiLSTM, embeddings trained from scratch | CRF (constrained Viterbi) | 0.5372 | 0.3059 | 0.4891 | 0.2552 | 0 | [seen](bilstm_crf_test_seen.json), [unseen](bilstm_crf_test_unseen.json) |
 | 4 | BERT | bert-base-cased | Softmax (argmax per word) | 0.3679 | 0.1678 | 0.3570 | 0.1604 | 85,050 | [seen](bert-base-cased_softmax_test_seen.json), [unseen](bert-base-cased_softmax_test_unseen.json) |
 | 5 | BERT | bert-base-cased | CRF (constrained Viterbi) | 0.5779 | 0.3382 | 0.5787 | 0.3347 | 0 | [seen](bert-base-cased_crf_test_seen.json), [unseen](bert-base-cased_crf_test_unseen.json) |
@@ -69,28 +69,31 @@ hides two movements: content-dependent roles drop on new topics (Evidence
 roles hold or rise (Counterclaim 0.417 → 0.484, Rebuttal 0.357 → 0.383).
 
 **Word features do not transfer to new topics; BERT does.** On unseen
-prompts the feature CRF (row 2) loses 0.086 macro-F1 (0.4139 → 0.3275) and
-drops on every role, most on Position (−0.169) and Evidence (−0.124), whose
+prompts the feature CRF (row 2) loses 0.107 macro-F1 (0.4333 → 0.3260) and
+drops on every role, most on Position (−0.202) and Evidence (−0.116), whose
 words are topic-specific. BERT + CRF (row 5) keeps its macro-F1
-(0.5779 → 0.5787). Caveat: row 2 trained on 3,000 of the 11,721 training
-essays to keep crfsuite fast, so part of its gap may come from less data.
+(0.5779 → 0.5787). More data does not close the gap: a first CRF run on
+3,000 training essays scored 0.4139 seen and 0.3275 unseen; training on all
+11,721 raised the seen score by 0.019 but left the unseen score essentially
+unchanged (0.3275 → 0.3260): the extra essays added more words of the same
+12 topics, which do not help on new ones.
 
 The BiLSTM-CRF (row 3) sits in between: it learns its word embeddings only
 from the 12 training prompts and loses 0.048 (0.5372 → 0.4891), with the
 largest drops again on Position (0.622 → 0.484) and Evidence (0.473 → 0.388).
 The less a model's word knowledge depends on the training topics, the less it
-loses: hand-built word features (−0.086), embeddings learned from the training
+loses: hand-built word features (−0.107), embeddings learned from the training
 essays (−0.048), pretrained BERT (+0.001).
 
 | Role | CRF seen | CRF unseen | Change | BERT seen | BERT unseen | Change |
 | --- | --- | --- | --- | --- | --- | --- |
-| Lead | 0.641 | 0.536 | −0.105 | 0.785 | 0.767 | −0.018 |
-| Position | 0.469 | 0.300 | −0.169 | 0.646 | 0.614 | −0.032 |
-| Claim | 0.312 | 0.213 | −0.099 | 0.529 | 0.514 | −0.015 |
-| Counterclaim | 0.181 | 0.153 | −0.027 | 0.417 | 0.484 | +0.067 |
-| Rebuttal | 0.103 | 0.080 | −0.023 | 0.357 | 0.383 | +0.026 |
-| Evidence | 0.429 | 0.305 | −0.124 | 0.516 | 0.480 | −0.036 |
-| Concluding Statement | 0.763 | 0.706 | −0.057 | 0.795 | 0.808 | +0.013 |
+| Lead | 0.675 | 0.568 | −0.107 | 0.785 | 0.767 | −0.018 |
+| Position | 0.514 | 0.312 | −0.202 | 0.646 | 0.614 | −0.032 |
+| Claim | 0.331 | 0.224 | −0.107 | 0.529 | 0.514 | −0.015 |
+| Counterclaim | 0.204 | 0.102 | −0.102 | 0.417 | 0.484 | +0.067 |
+| Rebuttal | 0.137 | 0.073 | −0.064 | 0.357 | 0.383 | +0.026 |
+| Evidence | 0.398 | 0.282 | −0.116 | 0.516 | 0.480 | −0.036 |
+| Concluding Statement | 0.775 | 0.721 | −0.054 | 0.795 | 0.808 | +0.013 |
 
 **Truncation removes the ending.** Same trained model (row 5), reading only the
 first 512 subwords of each essay instead of all windows:

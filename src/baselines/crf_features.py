@@ -13,10 +13,17 @@ Runs on CPU. By default it trains on all 11,721 training essays, like the
 neural models; --train-essays N trains on a fixed random sample (seed 42).
 The number used is recorded in the results file.
 
+Memory: features are built one essay at a time and handed straight to
+crfsuite, which stores them compactly; holding them all as Python dicts first
+would take about 6 GB on top of crfsuite's copy. The trained model is saved
+to --model, and --skip-training reuses it, so an interrupted evaluation does
+not need a new training run.
+
 Usage
 -----
     python src/baselines/crf_features.py --data-dir data/processed --results-dir results
     python src/baselines/crf_features.py --smoke          # 2-minute check
+    python src/baselines/crf_features.py --skip-training  # evaluate a saved model
 """
 
 from __future__ import annotations
@@ -85,51 +92,67 @@ def main():
     ap.add_argument("--c1", type=float, default=0.1)
     ap.add_argument("--c2", type=float, default=0.1)
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--model", type=Path, default=Path("checkpoints/crf_features.crfsuite"),
+                    help="where the trained model is saved (or read with --skip-training)")
+    ap.add_argument("--skip-training", action="store_true",
+                    help="reuse the model saved at --model instead of training")
     ap.add_argument("--smoke", action="store_true",
                     help="tiny run (200 train essays, 10 iterations, 100 essays per split)")
     args = ap.parse_args()
 
-    import sklearn_crfsuite  # imported here so --help works without it
+    import pycrfsuite  # installed with sklearn-crfsuite; imported here so --help works without it
 
     eval_limit = None
     name = NAME
     if args.smoke:
         args.train_essays, args.max_iterations, eval_limit = 200, 10, 100
         name = NAME + "_smoke"
+        args.model = args.model.with_name(args.model.stem + "_smoke.crfsuite")
+    args.model.parent.mkdir(parents=True, exist_ok=True)
+    meta_path = args.model.with_suffix(".json")
 
-    t0 = time.time()
-    train = load(args.data_dir / "train.jsonl.gz", args.train_essays or None, args.seed)
-    X = [token_features(r) for r in train]
-    y = [r["labels"] for r in train]
-    print(f"training on {len(train):,} essays, {sum(map(len, y)):,} tokens")
+    if args.skip_training:
+        meta = json.loads(meta_path.read_text())
+        print(f"using saved model {args.model} ({meta['train_essays']:,} essays)")
+    else:
+        t0 = time.time()
+        train = load(args.data_dir / "train.jsonl.gz", args.train_essays or None, args.seed)
+        trainer = pycrfsuite.Trainer(algorithm="lbfgs", verbose=False)
+        trainer.set_params({
+            "c1": args.c1,
+            "c2": args.c2,
+            "max_iterations": args.max_iterations,
+            "feature.possible_transitions": True,
+        })
+        n_tokens = 0
+        for r in train:  # one essay's features at a time
+            trainer.append(token_features(r), r["labels"])
+            n_tokens += len(r["tokens"])
+        n_train = len(train)
+        del train
+        print(f"training on {n_train:,} essays, {n_tokens:,} tokens")
+        trainer.train(str(args.model))
+        meta = {"train_essays": n_train, "train_minutes": round((time.time() - t0) / 60, 1)}
+        meta_path.write_text(json.dumps(meta) + "\n")
+        print(f"trained in {meta['train_minutes']} min; model saved to {args.model}")
 
-    crf = sklearn_crfsuite.CRF(
-        algorithm="lbfgs",
-        c1=args.c1,
-        c2=args.c2,
-        max_iterations=args.max_iterations,
-        all_possible_transitions=True,
-    )
-    crf.fit(X, y)
-    train_minutes = round((time.time() - t0) / 60, 1)
-    print(f"trained in {train_minutes} min")
-
+    tagger = pycrfsuite.Tagger()
+    tagger.open(str(args.model))
     for split in ("val", "test_seen", "test_unseen"):
         gold = load(args.data_dir / f"{split}.jsonl.gz", eval_limit, args.seed)
-        pred_labels = crf.predict([token_features(r) for r in gold])
-        preds = [{"essay_id": r["essay_id"], "labels": list(p)} for r, p in zip(gold, pred_labels)]
+        preds = [{"essay_id": r["essay_id"], "labels": tagger.tag(token_features(r))} for r in gold]
         write_jsonl_gz(args.results_dir / "predictions" / f"{name}_{split}.jsonl.gz", preds)
         result = score(gold, {p["essay_id"]: p["labels"] for p in preds})
         result.update(
             model=name,
             split=split,
             config={
-                "train_essays": len(train),
+                "train_essays": meta["train_essays"],
                 "max_iterations": args.max_iterations,
                 "c1": args.c1,
                 "c2": args.c2,
                 "seed": args.seed,
-                "train_minutes": train_minutes,
+                "train_minutes": meta["train_minutes"],
             },
         )
         out = args.results_dir / f"{name}_{split}.json"

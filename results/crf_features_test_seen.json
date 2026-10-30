@@ -1,0 +1,117 @@
+{
+  "overlap_span": {
+    "macro_f1": 0.4333,
+    "micro_f1": 0.4445,
+    "per_class": {
+      "Lead": {
+        "precision": 0.6619,
+        "recall": 0.6878,
+        "f1": 0.6746,
+        "support": 4331
+      },
+      "Position": {
+        "precision": 0.6016,
+        "recall": 0.4483,
+        "f1": 0.5138,
+        "support": 7704
+      },
+      "Claim": {
+        "precision": 0.507,
+        "recall": 0.2458,
+        "f1": 0.3311,
+        "support": 24089
+      },
+      "Counterclaim": {
+        "precision": 0.5164,
+        "recall": 0.1273,
+        "f1": 0.2043,
+        "support": 2718
+      },
+      "Rebuttal": {
+        "precision": 0.4484,
+        "recall": 0.0805,
+        "f1": 0.1365,
+        "support": 2049
+      },
+      "Evidence": {
+        "precision": 0.5302,
+        "recall": 0.3187,
+        "f1": 0.3981,
+        "support": 22475
+      },
+      "Concluding Statement": {
+        "precision": 0.7755,
+        "recall": 0.7739,
+        "f1": 0.7747,
+        "support": 6545
+      }
+    }
+  },
+  "exact_span": {
+    "macro_f1": 0.2418,
+    "micro_f1": 0.2333,
+    "per_class": {
+      "Lead": {
+        "precision": 0.303,
+        "recall": 0.3149,
+        "f1": 0.3089,
+        "support": 4331
+      },
+      "Position": {
+        "precision": 0.3963,
+        "recall": 0.2953,
+        "f1": 0.3384,
+        "support": 7704
+      },
+      "Claim": {
+        "precision": 0.2658,
+        "recall": 0.1289,
+        "f1": 0.1736,
+        "support": 24089
+      },
+      "Counterclaim": {
+        "precision": 0.2925,
+        "recall": 0.0721,
+        "f1": 0.1157,
+        "support": 2718
+      },
+      "Rebuttal": {
+        "precision": 0.2799,
+        "recall": 0.0503,
+        "f1": 0.0852,
+        "support": 2049
+      },
+      "Evidence": {
+        "precision": 0.2029,
+        "recall": 0.122,
+        "f1": 0.1523,
+        "support": 22475
+      },
+      "Concluding Statement": {
+        "precision": 0.5188,
+        "recall": 0.5176,
+        "f1": 0.5182,
+        "support": 6545
+      }
+    }
+  },
+  "token_accuracy": 0.719,
+  "illegal_bio_transitions": 2,
+  "overlap_errors": {
+    "boundary_error": 16203,
+    "missed": 24303,
+    "type_error": 4313,
+    "spurious": 1111
+  },
+  "essays": 7819,
+  "model": "crf_features",
+  "split": "test_seen",
+  "config": {
+    "train_essays": 11721,
+    "max_iterations": 100,
+    "c1": 0.1,
+    "c2": 0.1,
+    "seed": 42,
+    "train_minutes": 43.1
+  }
+}
