@@ -37,7 +37,7 @@ What is measured and what is not:
 | 68.62% of released offsets do not reproduce the segment text | Measured (`verify_alignment.py`, check A) |
 | 99.46% of segments kept after repair | Measured; a retention rate, not an accuracy |
 | Repaired offsets reproduce the annotation text: 100% | Measured (check C) |
-| Repaired span is the intended occurrence when a phrase repeats | Manual audit of a stratified sample: `docs/verification_sample.md` |
+| Repaired span is the intended copy when a phrase repeats | 100% of repeated argument segments choose the copy nearest the released offset (check H); stratified manual audit of 30 cases: two independent reviewers, 30/30 correct each |
 | Repair improves model scores | Not yet measured: offset-repair ablation in `docs/metrics_protocol.md` |
 
 | Split | Rule | Essays |
@@ -55,16 +55,19 @@ What is measured and what is not:
 | `data/processed/` | Cleaned BIO data per split (`*.jsonl.gz`), `splits.json`, `stats.json`, `cleaning_report.json`, `verification_report.json` | Done |
 | `src/prepare_data.py` | Raw archives → re-aligned segments → tokens + BIO labels → splits | Done |
 | `src/verify_alignment.py` | Independent checks of the repair; writes the audit sample | Done |
-| `src/evaluate.py` | Overlap and exact span F1 (macro, micro, per class) and analyses | To do |
-| `src/baselines/most_frequent.py` | Most-frequent tag per word | To do |
-| `src/baselines/crf_features.py` | Linear-chain CRF with hand-built features | To do |
-| `src/baselines/bilstm_crf.py` | BiLSTM-CRF | To do |
-| `src/trainers/train_token_clf.py` | Transformer token classifier, softmax or CRF decoder, sliding windows | To do |
-| `notebooks/colab_train.ipynb` | Runs the scripts on a Colab GPU; contains no model code | Started |
+| `src/evaluate.py` | Overlap and exact span F1 (macro, micro, per class), error types, illegal BIO count | Done |
+| `src/analyze_errors.py` | Breaks unmatched gold spans into absorbed / wrong-boundary / missed, top confusions, examples | Done |
+| `src/baselines/most_frequent.py` | Most-frequent tag per word | Done |
+| `src/baselines/crf_features.py` | Linear-chain CRF with hand-built features (word, neighbours, sentence/paragraph start, position in essay) | Written; runs on Colab |
+| `src/baselines/bilstm_crf.py` | BiLSTM-CRF over whole essays | Written; runs on Colab |
+| `src/trainers/train_token_clf.py` | Transformer token classifier, softmax or CRF decoder, sliding windows, truncation mode | Written; runs on Colab |
+| `src/trainers/windows.py` | Window splitting, first-subword alignment, prediction merging, constrained Viterbi (no torch) | Done, unit-tested |
+| `tests/` | Hand-checked metric cases and window/Viterbi checks (`python -m pytest tests/`) | Done |
+| `notebooks/colab_train.ipynb` | Runs the scripts on a Colab GPU: tests, smoke run, one cell per model, results export | Done |
 | `docs/data_pipeline.md` | Every cleaning step, why it is needed, and its counts | Done |
-| `docs/verification_sample.md` | Stratified manual audit of 30 repaired segments, two reviewers | To review |
+| `docs/verification_sample.md` | Stratified manual audit of 30 repaired segments, two reviewers | Both reviewers 30/30 |
 | `docs/metrics_protocol.md` | Metrics, why we use them, and the planned analyses | Done |
-| `results/benchmark.md` | Measured scores per model | Empty until runs exist |
+| `results/` | `benchmark.md` table and one results JSON per model and split | Baseline 1 done |
 | `contributions/` | One file per member, named `<NAME>_<STUDENT_ID>_<GITHUB_USERNAME>.md` | To do |
 
 ## Reproduce the data
@@ -106,7 +109,7 @@ finish.
 | --- | --- | --- | --- |
 | 1 | Lookup | Most-frequent tag per word | Argmax |
 | 2 | Linear-chain CRF | sklearn-crfsuite, hand features | Viterbi |
-| 3 | BiLSTM | BiLSTM + GloVe | CRF |
+| 3 | BiLSTM | 2-layer BiLSTM, embeddings trained from scratch | CRF (constrained Viterbi) |
 | 4 | BERT | bert-base-cased | Softmax |
 | 5 | BERT | bert-base-cased | CRF |
 | 6 | DeBERTa | deberta-v3-base | CRF |
