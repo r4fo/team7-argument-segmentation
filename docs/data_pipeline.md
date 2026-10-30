@@ -104,8 +104,9 @@ cases catch systematic errors; they do not estimate a population error rate.
 | Reviewer | Date | Correct | Wrong |
 | --- | --- | --- | --- |
 | A (Rafik Ajam) | 2026-10-29 | 30 / 30 | 0 |
-| B | pending | | |
+| B (Amro Akel) | 2026-10-29 | 30 / 30 | 0 |
 
+Both reviewers worked independently and agreed on all 30 cases.
 Reviewer A checked repeated-phrase cases against the full essay text in the
 raw CSV, for example essay 8248E7E6E2A0, where "because" occurs seven times:
 the chosen copy (start 278) is the one between the annotated Claim and
