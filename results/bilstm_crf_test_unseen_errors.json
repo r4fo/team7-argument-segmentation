@@ -1,0 +1,60 @@
+{
+  "gold_spans": 47331,
+  "unmatched_gold_spans": 29069,
+  "unmatched_by_prediction": {
+    "absorbed into / labelled as another role": 17747,
+    "right role, wrong boundaries": 10994,
+    "missed (predicted O)": 328
+  },
+  "predicted_spans_swallowing_2plus_gold": 3358,
+  "top_confusions": {
+    "Claim -> Evidence": 8281,
+    "Position -> Lead": 1061,
+    "Concluding Statement -> Evidence": 976,
+    "Position -> Evidence": 966,
+    "Claim -> Lead": 880,
+    "Counterclaim -> Evidence": 770,
+    "Rebuttal -> Evidence": 696,
+    "Claim -> Position": 579,
+    "Position -> Claim": 356,
+    "Evidence -> Claim": 345
+  },
+  "examples": {
+    "absorbed": [
+      {
+        "essay_id": "000A58BC095E",
+        "gold": "Claim",
+        "predicted": "Evidence",
+        "text": "But some people don't have the time to ."
+      },
+      {
+        "essay_id": "00534F5F61BD",
+        "gold": "Claim",
+        "predicted": "Evidence",
+        "text": "Scientists believe that Venus could sustain human life ."
+      },
+      {
+        "essay_id": "00615B338A19",
+        "gold": "Position",
+        "predicted": "Lead",
+        "text": "Venus is dangerous and scientist cant get close enough to study it ."
+      }
+    ],
+    "clean": [
+      {
+        "essay_id": "015F4D9DE71D",
+        "spans": 8
+      },
+      {
+        "essay_id": "1A0E4BA7410D",
+        "spans": 10
+      },
+      {
+        "essay_id": "26089316800B",
+        "spans": 7
+      }
+    ]
+  },
+  "gold_file": "data/processed/test_unseen.jsonl.gz",
+  "pred_file": "results/predictions/bilstm_crf_test_unseen.jsonl.gz"
+}

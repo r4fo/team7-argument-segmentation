@@ -1,0 +1,109 @@
+{
+  "overlap_span": {
+    "macro_f1": 0.0321,
+    "micro_f1": 0.1043,
+    "per_class": {
+      "Lead": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 4331
+      },
+      "Position": {
+        "precision": 0.0009,
+        "recall": 0.001,
+        "f1": 0.0009,
+        "support": 7704
+      },
+      "Claim": {
+        "precision": 0.0004,
+        "recall": 0.0001,
+        "f1": 0.0002,
+        "support": 24089
+      },
+      "Counterclaim": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 2718
+      },
+      "Rebuttal": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 2049
+      },
+      "Evidence": {
+        "precision": 0.1628,
+        "recall": 0.3559,
+        "f1": 0.2234,
+        "support": 22475
+      },
+      "Concluding Statement": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 6545
+      }
+    }
+  },
+  "exact_span": {
+    "macro_f1": 0.0001,
+    "micro_f1": 0.0003,
+    "per_class": {
+      "Lead": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 4331
+      },
+      "Position": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 7704
+      },
+      "Claim": {
+        "precision": 0.0001,
+        "recall": 0.0,
+        "f1": 0.0001,
+        "support": 24089
+      },
+      "Counterclaim": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 2718
+      },
+      "Rebuttal": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 2049
+      },
+      "Evidence": {
+        "precision": 0.0005,
+        "recall": 0.001,
+        "f1": 0.0006,
+        "support": 22475
+      },
+      "Concluding Statement": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 6545
+      }
+    }
+  },
+  "token_accuracy": 0.5335,
+  "illegal_bio_transitions": 83207,
+  "overlap_errors": {
+    "type_error": 10106,
+    "missed": 33709,
+    "spurious": 7089,
+    "boundary_error": 18087
+  },
+  "essays": 7819,
+  "model": "most_frequent",
+  "split": "test_seen"
+}

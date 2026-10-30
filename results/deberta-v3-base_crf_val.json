@@ -1,0 +1,124 @@
+{
+  "overlap_span": {
+    "macro_f1": 0.6478,
+    "micro_f1": 0.6626,
+    "per_class": {
+      "Lead": {
+        "precision": 0.7908,
+        "recall": 0.83,
+        "f1": 0.8099,
+        "support": 806
+      },
+      "Position": {
+        "precision": 0.6821,
+        "recall": 0.6418,
+        "f1": 0.6613,
+        "support": 1287
+      },
+      "Claim": {
+        "precision": 0.6766,
+        "recall": 0.5691,
+        "f1": 0.6182,
+        "support": 4217
+      },
+      "Counterclaim": {
+        "precision": 0.5175,
+        "recall": 0.5291,
+        "f1": 0.5233,
+        "support": 446
+      },
+      "Rebuttal": {
+        "precision": 0.4139,
+        "recall": 0.4557,
+        "f1": 0.4338,
+        "support": 327
+      },
+      "Evidence": {
+        "precision": 0.7297,
+        "recall": 0.6114,
+        "f1": 0.6653,
+        "support": 3837
+      },
+      "Concluding Statement": {
+        "precision": 0.8032,
+        "recall": 0.8433,
+        "f1": 0.8228,
+        "support": 1123
+      }
+    }
+  },
+  "exact_span": {
+    "macro_f1": 0.3996,
+    "micro_f1": 0.3868,
+    "per_class": {
+      "Lead": {
+        "precision": 0.4397,
+        "recall": 0.4615,
+        "f1": 0.4504,
+        "support": 806
+      },
+      "Position": {
+        "precision": 0.4641,
+        "recall": 0.4367,
+        "f1": 0.45,
+        "support": 1287
+      },
+      "Claim": {
+        "precision": 0.3891,
+        "recall": 0.3272,
+        "f1": 0.3555,
+        "support": 4217
+      },
+      "Counterclaim": {
+        "precision": 0.3421,
+        "recall": 0.3498,
+        "f1": 0.3459,
+        "support": 446
+      },
+      "Rebuttal": {
+        "precision": 0.2833,
+        "recall": 0.3119,
+        "f1": 0.2969,
+        "support": 327
+      },
+      "Evidence": {
+        "precision": 0.3764,
+        "recall": 0.3154,
+        "f1": 0.3432,
+        "support": 3837
+      },
+      "Concluding Statement": {
+        "precision": 0.542,
+        "recall": 0.569,
+        "f1": 0.5552,
+        "support": 1123
+      }
+    }
+  },
+  "token_accuracy": 0.7919,
+  "illegal_bio_transitions": 0,
+  "overlap_errors": {
+    "missed": 2173,
+    "boundary_error": 1478,
+    "spurious": 245,
+    "type_error": 819
+  },
+  "essays": 1302,
+  "model": "deberta-v3-base_crf",
+  "split": "val",
+  "config": {
+    "architecture_model": "microsoft/deberta-v3-base",
+    "decoder": "crf",
+    "epochs": 3,
+    "batch_size": 8,
+    "lr": 2e-05,
+    "head_lr": 0.001,
+    "max_length": 512,
+    "stride": 128,
+    "truncate": false,
+    "seed": 42,
+    "train_essays": 11721,
+    "train_minutes": 116.3,
+    "hardware": "Tesla T4"
+  }
+}

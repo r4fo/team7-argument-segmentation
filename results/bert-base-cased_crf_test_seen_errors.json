@@ -1,0 +1,60 @@
+{
+  "gold_spans": 69911,
+  "unmatched_gold_spans": 34167,
+  "unmatched_by_prediction": {
+    "absorbed into / labelled as another role": 19839,
+    "right role, wrong boundaries": 13310,
+    "missed (predicted O)": 1018
+  },
+  "predicted_spans_swallowing_2plus_gold": 4093,
+  "top_confusions": {
+    "Claim -> Evidence": 9702,
+    "Counterclaim -> Evidence": 1178,
+    "Rebuttal -> Evidence": 994,
+    "Position -> Lead": 801,
+    "Claim -> Position": 687,
+    "Evidence -> Claim": 675,
+    "Position -> Concluding Statement": 584,
+    "Position -> Claim": 574,
+    "Concluding Statement -> Evidence": 538,
+    "Claim -> Lead": 496
+  },
+  "examples": {
+    "absorbed": [
+      {
+        "essay_id": "0006ED03C701",
+        "gold": "Lead",
+        "predicted": "Evidence",
+        "text": "Luke's particapation in the seagoing cowboys program allowed him to experience adventure and visit many unique places . luke visited very unique places like China , Italy , Europe , and even Greece . In the text it says that luke knew it was the oppertunity of a lifetime . This evidence proves that in the program seagoing cowboys Luke was visiting many unique places ."
+      },
+      {
+        "essay_id": "001C3ABFA993",
+        "gold": "Lead",
+        "predicted": "Position",
+        "text": "The use of technology reading facial expressions can be good and bad , so i cant disagree with this or agree with this ."
+      },
+      {
+        "essay_id": "005AE8C7F6B0",
+        "gold": "Position",
+        "predicted": "Evidence",
+        "text": "In 1976 , scientists just figured out it was just unusual shadows making it look like a human's face , but this was the only Martian mesaa in Cydonia that made it look like it has a face ."
+      }
+    ],
+    "clean": [
+      {
+        "essay_id": "00F477C0C28F",
+        "spans": 7
+      },
+      {
+        "essay_id": "1295E8C0327F",
+        "spans": 8
+      },
+      {
+        "essay_id": "12B6AC349C2F",
+        "spans": 10
+      }
+    ]
+  },
+  "gold_file": "data/processed/test_seen.jsonl.gz",
+  "pred_file": "results/predictions/bert-base-cased_crf_test_seen.jsonl.gz"
+}

@@ -1,0 +1,60 @@
+{
+  "gold_spans": 69911,
+  "unmatched_gold_spans": 37349,
+  "unmatched_by_prediction": {
+    "absorbed into / labelled as another role": 21572,
+    "right role, wrong boundaries": 13959,
+    "missed (predicted O)": 1818
+  },
+  "predicted_spans_swallowing_2plus_gold": 4065,
+  "top_confusions": {
+    "Claim -> Evidence": 10009,
+    "Position -> Lead": 1057,
+    "Counterclaim -> Evidence": 1048,
+    "Claim -> Lead": 809,
+    "Rebuttal -> Evidence": 795,
+    "Concluding Statement -> Evidence": 768,
+    "Evidence -> Claim": 751,
+    "Claim -> Position": 685,
+    "Position -> Claim": 553,
+    "Evidence -> Rebuttal": 537
+  },
+  "examples": {
+    "absorbed": [
+      {
+        "essay_id": "0006ED03C701",
+        "gold": "Lead",
+        "predicted": "Evidence",
+        "text": "Luke's particapation in the seagoing cowboys program allowed him to experience adventure and visit many unique places . luke visited very unique places like China , Italy , Europe , and even Greece . In the text it says that luke knew it was the oppertunity of a lifetime . This evidence proves that in the program seagoing cowboys Luke was visiting many unique places ."
+      },
+      {
+        "essay_id": "001C3ABFA993",
+        "gold": "Lead",
+        "predicted": "Position",
+        "text": "The use of technology reading facial expressions can be good and bad , so i cant disagree with this or agree with this ."
+      },
+      {
+        "essay_id": "005AE8C7F6B0",
+        "gold": "Position",
+        "predicted": "Claim",
+        "text": "In 1976 , scientists just figured out it was just unusual shadows making it look like a human's face , but this was the only Martian mesaa in Cydonia that made it look like it has a face ."
+      }
+    ],
+    "clean": [
+      {
+        "essay_id": "0201B7877AD3",
+        "spans": 8
+      },
+      {
+        "essay_id": "05CBB3573B76",
+        "spans": 6
+      },
+      {
+        "essay_id": "1811058EC9A2",
+        "spans": 6
+      }
+    ]
+  },
+  "gold_file": "data/processed/test_seen.jsonl.gz",
+  "pred_file": "results/predictions/bilstm_crf_test_seen.jsonl.gz"
+}
