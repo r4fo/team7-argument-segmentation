@@ -57,6 +57,7 @@ What is measured and what is not:
 | `src/verify_alignment.py` | Independent checks of the repair; writes the audit sample | Done |
 | `src/evaluate.py` | Overlap and exact span F1 (macro, micro, per class), error types, illegal BIO count | Done |
 | `src/analyze_errors.py` | Breaks unmatched gold spans into absorbed / wrong-boundary / missed, top confusions, examples | Done |
+| `src/robustness.py` | Softmax post-processing tuned on val; bootstrap 95% intervals for seen→unseen changes and model differences | Done |
 | `src/baselines/most_frequent.py` | Most-frequent tag per word | Done |
 | `src/baselines/crf_features.py` | Linear-chain CRF with hand-built features (word, neighbours, sentence/paragraph start, position in essay) | Written; runs on Colab |
 | `src/baselines/bilstm_crf.py` | BiLSTM-CRF over whole essays | Written; runs on Colab |

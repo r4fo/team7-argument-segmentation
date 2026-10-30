@@ -52,6 +52,15 @@ spans per essay against 8.9 in the gold data. Each switch breaks one span
 into fragments that no longer overlap the gold span enough to count. The
 CRF scores the whole sequence and allows no illegal transition.
 
+Is the gap only missing clean-up? A hand-made rule for the softmax (merge each
+run of one role into a span, drop spans shorter than k words, k = 9 chosen on
+val) raises its span macro-F1 from 0.3679 to 0.5458 on test_seen (0.5460
+unseen), while its token accuracy falls from 0.7647 to 0.7425. The CRF, with
+no rule, still leads by 0.032 (95% CI 0.028 to 0.036) and is far more exact
+on boundaries (exact F1 0.338 against 0.234). So the softmax can be patched
+close to the CRF, but the CRF learns the transitions itself
+([robustness.json](robustness.json), `src/robustness.py`).
+
 **Token accuracy hides span failure.** The most-frequent baseline reaches
 53.35% token accuracy on test_seen but 0.0321 span macro-F1: it labels tokens
 one by one and almost never forms a complete span.
@@ -84,6 +93,16 @@ largest drops again on Position (0.622 → 0.484) and Evidence (0.473 → 0.388)
 The less a model's word knowledge depends on the training topics, the less it
 loses: hand-built word features (−0.107), embeddings learned from the training
 essays (−0.048), pretrained BERT (+0.001).
+
+Are these changes real? 95% bootstrap intervals over essays (1,000
+resamples): feature CRF −0.116 to −0.098 and BiLSTM-CRF −0.059 to −0.037,
+both clear drops; BERT + CRF −0.009 to +0.012 and DeBERTa + CRF −0.015 to
++0.005, so no measurable change. The two test sets have almost the same mix of
+roles per essay (Claim 3.08 against 3.21, Evidence 2.87 against 2.86), so the
+drop is not a change in what the essays contain. The intervals cover test-set
+variation only: each model was trained once (seed 42). Model gaps on
+test_seen are also well outside noise: DeBERTa over BERT +0.074
+(0.069 to 0.080), BERT + CRF over BiLSTM-CRF +0.041 (0.035 to 0.046).
 
 | Role | CRF seen | CRF unseen | Change | BERT seen | BERT unseen | Change |
 | --- | --- | --- | --- | --- | --- | --- |

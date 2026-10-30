@@ -1,0 +1,129 @@
+{
+  "softmax_postprocessing": {
+    "min_span_words_chosen_on_val": 9,
+    "val_overlap_f1_by_k": {
+      "1": 0.3659,
+      "2": 0.4533,
+      "3": 0.49,
+      "4": 0.511,
+      "5": 0.5253,
+      "6": 0.5325,
+      "7": 0.537,
+      "8": 0.5395,
+      "9": 0.5398,
+      "10": 0.5366,
+      "11": 0.5311,
+      "12": 0.5252,
+      "13": 0.5188,
+      "14": 0.5106,
+      "15": 0.5028,
+      "16": 0.4946,
+      "17": 0.4851,
+      "18": 0.4746,
+      "19": 0.4626,
+      "20": 0.4544
+    },
+    "test_seen_raw": {
+      "overlap_f1": 0.3679,
+      "exact_f1": 0.1678,
+      "token_accuracy": 0.7647,
+      "illegal_bio": 85050,
+      "spans_per_essay": 18.43
+    },
+    "test_seen_postprocessed": {
+      "overlap_f1": 0.5458,
+      "exact_f1": 0.2335,
+      "token_accuracy": 0.7425,
+      "illegal_bio": 0,
+      "spans_per_essay": 7.46
+    },
+    "test_unseen_raw": {
+      "overlap_f1": 0.357,
+      "exact_f1": 0.1604,
+      "token_accuracy": 0.7565,
+      "illegal_bio": 61522,
+      "spans_per_essay": 19.67
+    },
+    "test_unseen_postprocessed": {
+      "overlap_f1": 0.546,
+      "exact_f1": 0.2263,
+      "token_accuracy": 0.7361,
+      "illegal_bio": 0,
+      "spans_per_essay": 7.65
+    }
+  },
+  "seen_to_unseen_change": {
+    "most_frequent": {
+      "change": -0.0009,
+      "ci95": [
+        -0.0019,
+        0.0
+      ]
+    },
+    "crf_features": {
+      "change": -0.1073,
+      "ci95": [
+        -0.1161,
+        -0.0978
+      ]
+    },
+    "bilstm_crf": {
+      "change": -0.0481,
+      "ci95": [
+        -0.0587,
+        -0.0375
+      ]
+    },
+    "bert-base-cased_softmax": {
+      "change": -0.0109,
+      "ci95": [
+        -0.0193,
+        -0.0023
+      ]
+    },
+    "bert-base-cased_crf": {
+      "change": 0.0008,
+      "ci95": [
+        -0.009,
+        0.0116
+      ]
+    },
+    "deberta-v3-base_crf": {
+      "change": -0.0049,
+      "ci95": [
+        -0.0147,
+        0.0053
+      ]
+    }
+  },
+  "paired_differences_test_seen": {
+    "deberta-v3-base_crf - bert-base-cased_crf": {
+      "difference": 0.0744,
+      "ci95": [
+        0.0689,
+        0.0803
+      ]
+    },
+    "bert-base-cased_crf - bilstm_crf": {
+      "difference": 0.0407,
+      "ci95": [
+        0.0346,
+        0.0462
+      ]
+    },
+    "bert-base-cased_crf - bert-base-cased_softmax": {
+      "difference": 0.21,
+      "ci95": [
+        0.2044,
+        0.2143
+      ]
+    },
+    "bert-base-cased_crf - bert-base-cased_softmax+postprocessed": {
+      "difference": 0.0321,
+      "ci95": [
+        0.0277,
+        0.0363
+      ]
+    }
+  }
+}
